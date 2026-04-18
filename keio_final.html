@@ -505,17 +505,38 @@ function chkOk(ans, correct) {
 function callAPI(system, user, maxT, cb) {
   fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:maxT||800, system:system, messages:[{role:'user',content:user}]})
-  }).then(function(r){return r.json();}).then(function(d){
+    headers: {
+      'Content-Type': 'application/json',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: maxT || 800,
+      system: system,
+      messages: [{role:'user', content:user}]
+    })
+  }).then(function(r) {
+    return r.json();
+  }).then(function(d) {
+    if(d.error) {
+      console.error('[API Error]', d.error.type, d.error.message);
+      cb(new Error(d.error.message), '');
+      return;
+    }
     cb(null, (d.content||[]).map(function(c){return c.text||'';}).join(''));
-  }).catch(function(e){cb(e,'');});
+  }).catch(function(e) {
+    console.error('[Fetch Error]', e);
+    cb(e, '');
+  });
 }
 
 function callAPIWithImage(system, textContent, imageB64, mediaType, maxT, cb) {
   fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
-    headers: {'Content-Type':'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
     body: JSON.stringify({
       model: 'claude-sonnet-4-20250514', max_tokens: maxT||1200, system: system,
       messages: [{role:'user', content:[
@@ -861,11 +882,18 @@ function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
 
   callAPI(sysMsg, prompt, 1600, function(err, raw) {
     var qs = null;
-    if(!err && raw) {
+    if(err) {
+      console.error('[execGenerate] API error:', err);
+    } else if(raw) {
       try {
         var clean = raw.replace(/```json|```/g,'').trim();
+        // JSONブロックを探す（余分なテキストが前後にある場合の対策）
+        var jsonMatch = clean.match(/\{[\s\S]*"questions"[\s\S]*\}/);
+        if(jsonMatch) clean = jsonMatch[0];
         qs = JSON.parse(clean).questions;
-      } catch(e){}
+      } catch(e) {
+        console.error('[execGenerate] JSON parse error:', e, 'raw:', raw.slice(0,200));
+      }
     }
 
     if(qs && qs.length) {
@@ -874,9 +902,12 @@ function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
       sess.aiGenerated = true;
       loadEl.style.display='none';
       mainEl.style.display='block';
+      var errDiv2 = document.getElementById('drill-error');
+      if(errDiv2) errDiv2.innerHTML = '';
       renderQ();
     } else {
       // 失敗時 — 再試行UIを表示
+      var capturedErr = err;
       loadEl.style.display='none';
       mainEl.style.display='none';
 
@@ -903,9 +934,10 @@ function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
 
       var sub = document.createElement('div');
       sub.style.cssText = 'font-size:13px;color:var(--ks);margin-bottom:20px;line-height:1.6';
+      var errMsg = capturedErr ? '(' + (capturedErr.message||'接続エラー') + ')' : '(JSONパースエラー)';
       sub.textContent = attempt >= 3
-        ? 'インターネット接続を確認してから再試行してください。'
-        : '一時的なエラーです。もう一度試してみてください。（' + attempt + '/3回目）';
+        ? 'インターネット接続を確認してから再試行してください。' + errMsg
+        : '一時的なエラーです。もう一度試してみてください。（' + attempt + '/3回目）' + errMsg;
 
       var retryBtn = document.createElement('button');
       retryBtn.className = 'bp';
