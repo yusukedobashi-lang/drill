@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="慶應ドリル">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAEf0lEQVR42u3dsWoUURiG4ZOQC7AVRCshVRAbO8uAWNglVomVWIho6wXYKmIhkkKtooVgIQuWqbQRSWsVENJ6AYIWOjKGnc3M7tnZPf88T6MQEZO8fvzJruvK+d39XwmCWPUhQNAgaBA0CBpBg6BB0CBoEDSCBkGDoEHQIGgEDYIGQYOgQdAIGgQNggZBg6ARNAgaBA2CBkEjaBA0CBoEDYJG0CBoEDQIGkGDoEHQIGgQNIIGQYOgQdAgaAQNggZBg6BB0AgaBA2CBkE3+vnt0Ge1pbuv7gu6hJhF3T7maFGvWWWqqJ/tPrHQyxqzyLufGhHWejVizKKe/m4uPeqV87v7v6KfGGsXN5Q8RawlniCr0WOmv78AFrrHkIe+0rPGWcparw4h5qEve46lLWWtiwg617oOMepcIVpoELSVts4DWmhRi9nJMcCoIz7pKGzQHiTpjwdWnB5ODUEvNuq3116HiTnX+1Lys+4G/W27d/e+hom6eh+u7l8e9JlU9POh1y5uTHU2VCFHVUV9cPPLoNY5xEJ3PT2aYi55pZv+7F3X2hP8CzsvmmJe39xLW6OdYt+3rdFOSne+N0Y9pDMkRNCnrfSkE2N9cy+llNLh46vlLvT7R39+0hB1m7WOsM7F39Cn3dNtQg6nivr5uda3dZSYQ58c08Rc4kr/W+emsDPc1iUp8p9gTfMFUpdV3nhwkP3PdfRy+/jCrTdne4n5pDFr/d/97YZe8i+QluzEOHq5fVz/cWFnSPCYw54c9U/U+uZe55hLOD1ar3M96lrYEWMOfUNvjXZmWuVcUVer/PnN9bO5VrpzzCfCjhpz6KDndQvPEnPOqKf+i37jYeRPefwHVmaJepaVPhlz09v7XOfoMQ8i6FnlvqebAp/7qTEQgwi679PjtHWedaWts4Xu7fRoE3P9bW2jdmoIeiFRVw+eXNn+0Bhq/W1tHmwRs6AXek+3ibqPmN3QVnruTovc3SzoIk8Pp4agi4+6+lHMgi7WyahzP+MOQfe60tOwzoIu4vRwagh66aPuenrMi5gFnUXO08P3nAUd5p52agi6yNPDqSHoIqKeZaWnXWcxCxpBW+l5rrR1FvTg72kxCzpM1GIWdK+6nB2+7yzoQa+0dRb0QqJus9Jd11nM7az5EHSLuk2snz4+TSldmvyLnp+b+AqhQhZ0b2E3Rf0n5A6qVwVtejFFMXcW7uV0F/UF4LiYb4/Gr/TYl/ytv5CikC30otb6xbWveX6zv2sd+YUUfVFYgKYVTimNjX3SC7KLWdBLH3VbYhZ0EeorHem/YRa0lbbOPfBdjjkuct2ZdChmCx17qcUs6CKjHrfOYhZ0mKUWs6CL1XQ7I+gQK22dBR3Gj7ThgyDoclUPpGyNdv4tc7bnfiDoRaifGDkeImcyD6xgoUHQIGgQNIIGQYOgQdAgaAQNggZBg6BB0AgaBA2CBkGDoBE0CBoEDYIGQSNoEDQIGgQNgkbQIGgQNAgaBI2gQdAgaBA0ggZBg6BB0CBoBA2CBkGDoEHQCBoEDYKG/H4D137TtmYW/y0AAAAASUVORK5CYII=">
+<title>慶應受験ドリル</title>
+<style>
+:root{
+  --kn:#0a2463;--kn2:#1a3a7a;--kn3:#061840;
+  --kr:#c8102e;--kr2:#e8294a;
+  --kg:#f4f5f8;--kw:#ffffff;
+  --kt:#0a2463;--ks:#4a5580;--kb:#d0d5e8;--ko:#b8960c
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--kg);min-height:100vh;color:var(--kt)}
+.app{max-width:680px;margin:0 auto}
+
+.header{background:var(--kn);padding:14px 16px;padding-top:calc(14px + env(safe-area-inset-top));display:flex;align-items:center;gap:12px}
+.hlogo{width:36px;height:36px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.htitle{font-size:17px;font-weight:700;color:#fff;letter-spacing:.03em}
+.hsub{font-size:11px;color:rgba(255,255,255,.6);margin-top:1px}
+
+.nav{display:flex;background:var(--kn3);border-bottom:3px solid var(--kr);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nb{flex:1;min-width:60px;font-size:12px;padding:10px 6px 9px;border:none;background:none;cursor:pointer;color:rgba(255,255,255,.55);font-family:inherit;font-weight:500;transition:all .15s;position:relative;white-space:nowrap}
+.nb.on{color:#fff;background:var(--kn)}
+.nb.on::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:3px;background:var(--kr)}
+
+.content{padding:16px;padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+.view{display:none}.view.on{display:block}
+
+.card{background:var(--kw);border:1px solid var(--kb);border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(10,36,99,.06)}
+.ctitle{font-size:15px;font-weight:700;color:var(--kn);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--kn);display:flex;align-items:center;gap:8px}
+.ctitle::before{content:'';display:block;width:4px;height:16px;background:var(--kr);border-radius:2px;flex-shrink:0}
+
+.srow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.sc{background:var(--kn);border-radius:12px;padding:14px 12px;text-align:center}
+.sl{font-size:11px;color:rgba(255,255,255,.65);margin-bottom:5px;font-weight:500}
+.sv{font-size:24px;font-weight:700;color:#fff}
+.su{font-size:12px;color:rgba(255,255,255,.65);font-weight:400}
+
+.brow{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.blbl{font-size:13px;color:var(--ks);width:36px;text-align:right;flex-shrink:0;font-weight:500}
+.btrack{flex:1;height:20px;background:#e8eaf2;border-radius:6px;overflow:hidden}
+.bfill{height:100%;border-radius:6px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.bpct{font-size:12px;color:var(--ks);width:34px;font-weight:600}
+
+.qrow{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--kb);cursor:pointer}
+.qrow:last-child{border-bottom:none}
+.qlbl{font-size:15px;font-weight:600;color:var(--kn)}
+.qlvl{font-size:12px;color:var(--kr);background:#fef0f2;padding:3px 10px;border-radius:99px;font-weight:600;border:1px solid #fcd0d6}
+
+.sel-section{margin-bottom:16px}
+.sel-label{font-size:13px;font-weight:700;color:var(--ks);margin-bottom:8px}
+.sel-row{display:flex;gap:8px;flex-wrap:wrap}
+.sel-btn{font-size:14px;font-weight:600;padding:9px 18px;border:2px solid var(--kb);border-radius:99px;cursor:pointer;background:var(--kw);color:var(--ks);font-family:inherit;transition:all .15s;line-height:1}
+.sel-btn.on{background:var(--kn);color:#fff;border-color:var(--kn)}
+.sel-btn:hover{border-color:var(--kn);color:var(--kn)}
+.sel-btn.on:hover{background:var(--kn2)}
+.sel-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+
+.field label{font-size:13px;color:var(--ks);display:block;margin-bottom:6px;font-weight:600}
+.field input,.field textarea{width:100%;font-size:15px;padding:10px 12px;border:1.5px solid var(--kb);border-radius:10px;background:var(--kw);color:var(--kt);outline:none;font-family:inherit;font-weight:500;-webkit-appearance:none;transition:border-color .15s}
+.field input:focus,.field textarea:focus{border-color:var(--kn)}
+.field textarea{resize:vertical;min-height:100px;font-size:14px;line-height:1.6}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+
+.bp{font-size:15px;font-weight:700;padding:13px 24px;border:none;background:var(--kn);color:#fff;border-radius:10px;cursor:pointer;font-family:inherit;width:100%;letter-spacing:.03em;transition:background .15s}
+.bp:hover{background:var(--kn2)}
+.bpr{font-size:15px;font-weight:700;padding:13px 24px;border:none;background:var(--kr);color:#fff;border-radius:10px;cursor:pointer;font-family:inherit;transition:background .15s}
+.bpr:hover{background:var(--kr2)}
+.bpg{font-size:14px;font-weight:700;padding:11px 20px;border:none;background:var(--ko);color:#fff;border-radius:10px;cursor:pointer;font-family:inherit;transition:opacity .15s}
+.bpg:hover{opacity:.85}
+.bs{font-size:14px;padding:11px 18px;border:1.5px solid var(--kb);border-radius:10px;cursor:pointer;background:var(--kw);color:var(--kt);font-family:inherit;font-weight:600;transition:all .15s}
+.bs:hover{border-color:var(--kn);color:var(--kn)}
+
+.prog-wrap{margin-bottom:16px}
+.prog-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.prog-lbl{font-size:13px;font-weight:600;color:var(--kn)}
+.prog-pct{font-size:13px;font-weight:700;color:var(--kr)}
+.prog-track{height:8px;background:#e8eaf2;border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--kn),var(--kr));border-radius:99px;transition:width .4s}
+
+.qsubj{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--kn);padding:3px 10px;border-radius:99px;margin-bottom:10px;letter-spacing:.05em}
+.qtext{font-size:16px;line-height:1.85;white-space:pre-wrap;color:var(--kt);font-weight:500}
+
+.ans-wrap{position:relative;margin-bottom:12px}
+.ans-area{width:100%;font-size:15px;padding:12px 50px 12px 14px;border:2px solid var(--kb);border-radius:10px;background:var(--kw);color:var(--kt);min-height:80px;resize:none;font-family:inherit;outline:none;display:block;transition:border-color .2s;font-weight:500}
+.ans-area:focus{border-color:var(--kn)}
+.ans-area.listening{border-color:var(--kr);background:#fff8f9}
+.mic-btn{position:absolute;right:10px;top:10px;width:34px;height:34px;border-radius:50%;border:2px solid var(--kb);cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--kw);transition:all .2s}
+.mic-btn.listening{background:var(--kr);border-color:var(--kr)}
+.mic-btn.listening svg{stroke:#fff}
+.mic-btn svg{width:16px;height:16px;stroke:var(--ks);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.vstatus{font-size:13px;padding:8px 14px;border-radius:8px;margin-bottom:10px;display:none;font-weight:500}
+.vstatus.on{display:block;background:#fef0f2;color:var(--kr);border:1px solid #fcd0d6}
+.vstatus.done{display:block;background:#f0f7ec;color:#1f5c0f;border:1px solid #c4e0b5}
+@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(2.5)}}
+.wb{display:inline-flex;gap:3px;align-items:center;vertical-align:middle;margin-left:6px}
+.wb span{width:3px;height:10px;background:currentColor;border-radius:99px;animation:wave .6s ease-in-out infinite}
+.wb span:nth-child(2){animation-delay:.1s}.wb span:nth-child(3){animation-delay:.2s}.wb span:nth-child(4){animation-delay:.3s}
+
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.fb{font-size:14px;line-height:1.75;padding:14px 16px;border-radius:10px;margin-bottom:12px;white-space:pre-wrap;display:none;font-weight:500}
+.fb.ok{background:#f0f7ec;color:#1f5c0f;border:1px solid #c4e0b5}
+.fb.ng{background:#fef0f2;color:var(--kr);border:1px solid #fcd0d6}
+
+.aipanel{border:1.5px solid var(--kn);border-radius:10px;overflow:hidden;margin-top:12px}
+.aiph{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--kn);cursor:pointer}
+.aipt{font-size:13px;font-weight:700;color:#fff;letter-spacing:.03em}
+.aich{font-size:12px;color:rgba(255,255,255,.7)}
+.aipb{padding:14px;font-size:14px;line-height:1.8;background:var(--kw)}
+.aibrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.aib{font-size:13px;padding:7px 14px;border:1.5px solid var(--kn);border-radius:99px;cursor:pointer;background:var(--kw);color:var(--kn);font-family:inherit;font-weight:600;transition:all .15s}
+.aib:hover,.aib.on{background:var(--kn);color:#fff}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:20px;height:20px;border:2px solid var(--kb);border-top-color:var(--kn);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+.loading-card{background:var(--kw);border:1px solid var(--kb);border-radius:12px;padding:32px 16px;margin-bottom:14px;text-align:center}
+.loading-text{font-size:14px;color:var(--ks);font-weight:500}
+
+.tag-ai{font-size:10px;font-weight:700;background:var(--kr);color:#fff;padding:2px 7px;border-radius:99px;letter-spacing:.05em}
+.tag-db{font-size:10px;font-weight:700;background:var(--ks);color:#fff;padding:2px 7px;border-radius:99px;letter-spacing:.05em}
+.tag-mt{font-size:10px;font-weight:700;background:var(--ko);color:#fff;padding:2px 7px;border-radius:99px;letter-spacing:.05em}
+
+.reswrap{text-align:center;padding:24px 0}
+.rescircle{width:88px;height:88px;border-radius:50%;border:3px solid var(--kn);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;margin:0 auto 16px;color:var(--kn)}
+.restitle{font-size:20px;font-weight:700;color:var(--kn);margin-bottom:8px}
+.ressub{font-size:14px;color:var(--ks);margin-bottom:20px}
+.resdetail{text-align:left;font-size:14px;line-height:1.8;background:#f0f3fa;padding:14px;border-radius:10px;margin-bottom:16px;white-space:pre-wrap;border-left:4px solid var(--kn);color:var(--kt)}
+
+.hgrid{display:grid;grid-template-columns:78px 50px 1fr 44px 42px 34px;gap:5px}
+.hhdr{font-size:11px;color:var(--ks);font-weight:700;padding-bottom:8px;border-bottom:2px solid var(--kn);margin-bottom:6px}
+.hrow{font-size:13px;padding:9px 0;border-bottom:1px solid var(--kb);align-items:center;color:var(--ks)}
+.hrow:last-child{border-bottom:none}
+.badge{font-size:11px;padding:3px 8px;border-radius:99px;font-weight:700;display:inline-block}
+.gs{background:#f0f7ec;color:#1f5c0f;border:1px solid #c4e0b5}
+.ga{background:#eef4fb;color:#0c447c;border:1px solid #b5d4f4}
+.gb{background:#fef9ee;color:#854F0B;border:1px solid #FAC775}
+.gc{background:#fef0f2;color:var(--kr);border:1px solid #fcd0d6}
+
+.mig{background:linear-gradient(135deg,var(--kn),var(--kn2));border-radius:12px;padding:16px;margin-bottom:16px;color:#fff}
+.countdown-box{background:linear-gradient(135deg,var(--kn),var(--kn2));border-radius:16px;padding:20px;margin-bottom:16px;text-align:center;color:#fff}
+.countdown-label{font-size:12px;color:rgba(255,255,255,.7);margin-bottom:8px;font-weight:600;letter-spacing:.08em}
+.countdown-days{font-size:52px;font-weight:800;line-height:1;margin-bottom:4px}
+.countdown-days.urgent{color:#ffd580}
+.countdown-sub{font-size:13px;color:rgba(255,255,255,.75)}
+
+.mt-tab-bar{display:flex;gap:0;margin-bottom:16px;border:1.5px solid var(--kn);border-radius:10px;overflow:hidden}
+.mt-tab-btn{flex:1;padding:10px;font-size:12px;font-weight:700;border:none;background:var(--kw);color:var(--kn);cursor:pointer;font-family:inherit;transition:all .15s}
+.mt-tab-btn.on{background:var(--kn);color:#fff}
+
+.mt-exam-row{padding:12px 0;border-bottom:1px solid var(--kb)}
+.mt-exam-row:last-child{border-bottom:none}
+.mt-exam-name{font-size:14px;font-weight:700;color:var(--kn);margin-bottom:4px}
+.mt-exam-date{font-size:12px;color:var(--ks)}
+.mt-exam-days{font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px}
+.days-soon{background:#fef0f2;color:var(--kr);border:1px solid #fcd0d6}
+.days-ok{background:#eef4fb;color:#0c447c;border:1px solid #b5d4f4}
+.days-done{background:#f0f0ea;color:#888;border:1px solid #ddd}
+
+.genbox{background:#f0f3fa;border:1px solid var(--kb);border-radius:10px;padding:14px;margin-bottom:14px}
+.genbox-title{font-size:13px;font-weight:700;color:var(--kn);margin-bottom:6px}
+.genbox-sub{font-size:12px;color:var(--ks);line-height:1.6}
+
+.weakness-subj{font-weight:600;color:var(--kn);margin-right:8px}
+.weakness-count{font-size:12px;font-weight:700;color:var(--kr);background:#fef0f2;padding:2px 8px;border-radius:99px;border:1px solid #fcd0d6}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+  <div class="hlogo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="36" height="36">
+      <defs>
+        <linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2e78c8"/><stop offset="100%" stop-color="#1a5aa0"/></linearGradient>
+        <linearGradient id="hs1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f5f5f0"/><stop offset="100%" stop-color="#d4cfc0"/></linearGradient>
+        <linearGradient id="hs2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8102e"/><stop offset="100%" stop-color="#a00820"/></linearGradient>
+        <linearGradient id="hc1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a3a7a"/><stop offset="100%" stop-color="#0a2463"/></linearGradient>
+      </defs>
+      <rect width="120" height="120" fill="url(#hbg)"/>
+      <g transform="translate(60,60) rotate(40)">
+        <rect x="-6" y="-46" width="12" height="5" rx="6" fill="url(#hc1)"/>
+        <rect x="-6" y="-42" width="12" height="20" rx="2" fill="url(#hc1)"/>
+        <rect x="-6" y="-23" width="12" height="3" fill="#c8a84a"/>
+        <rect x="-5.5" y="-20" width="11" height="30" rx="2" fill="url(#hs1)"/>
+        <path d="M-5,10 L5,10 L3.5,16 L-3.5,16 Z" fill="#d4cfc0"/>
+        <path d="M-3.5,16 L3.5,16 L1,24 L0,28 L-1,24 Z" fill="#b8a878"/>
+        <line x1="0" y1="18" x2="0" y2="27" stroke="rgba(0,0,0,0.3)" stroke-width="0.7" stroke-linecap="round"/>
+      </g>
+      <g transform="translate(60,60) rotate(-40)">
+        <rect x="-6" y="-46" width="12" height="5" rx="6" fill="#8a0018"/>
+        <rect x="-6" y="-42" width="12" height="20" rx="2" fill="#a00820"/>
+        <rect x="-6" y="-23" width="12" height="3" fill="#c8a84a"/>
+        <rect x="-5.5" y="-20" width="11" height="30" rx="2" fill="url(#hs2)"/>
+        <path d="M-5,10 L5,10 L3.5,16 L-3.5,16 Z" fill="#a00820"/>
+        <path d="M-3.5,16 L3.5,16 L1,24 L0,28 L-1,24 Z" fill="#c8a84a"/>
+        <line x1="0" y1="18" x2="0" y2="27" stroke="rgba(0,0,0,0.3)" stroke-width="0.7" stroke-linecap="round"/>
+      </g>
+      <polygon points="60,52 64,57 60,62 56,57" fill="rgba(255,255,255,0.9)"/>
+      <polygon points="60,54 62.5,57 60,60 57.5,57" fill="#c8a84a"/>
+    </svg>
+  </div>
+  <div>
+    <div class="htitle">慶應受験ドリル <span style="font-size:11px;background:var(--kr);color:#fff;padding:2px 8px;border-radius:99px;font-weight:700">AI完全連携</span></div>
+    <div class="hsub">普通部・中等部・SFC 対策</div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nb on" id="nav-home">ホーム</button>
+  <button class="nb" id="nav-setup">志望校ドリル</button>
+  <button class="nb" id="nav-monthly">マンスリーテスト</button>
+  <button class="nb" id="nav-history">履歴</button>
+</div>
+
+<div class="content">
+
+<!-- HOME -->
+<div id="v-home" class="view on">
+  <div id="mig-banner"></div>
+  <div id="mt-next-card"></div>
+  <div class="srow" id="hstats"></div>
+  <div class="card"><div class="ctitle">科目別 正答率</div><div id="achart"></div></div>
+  <div class="card"><div class="ctitle">クイックスタート</div><div id="qlist"></div></div>
+<div id="data-mgmt"></div>
+</div>
+
+<!-- DRILL SETUP -->
+<div id="v-setup" class="view">
+  <div class="card">
+    <div class="ctitle">志望校ドリル設定</div>
+    <div class="genbox">
+      <div class="genbox-title">Claude AI が問題を生成します</div>
+      <div class="genbox-sub">科目・単元・難易度を選んで開始。AIが慶應受験レベルの問題をその場で作成します。</div>
+    </div>
+    <div class="sel-section">
+      <div class="sel-label">科目</div>
+      <div class="sel-row" id="sel-subject"></div>
+    </div>
+    <div class="sel-section">
+      <div class="sel-label">単元</div>
+      <div class="sel-row" id="sel-unit"></div>
+    </div>
+    <div class="sel-section">
+      <div class="sel-label">難易度</div>
+      <div class="sel-row" id="sel-level"></div>
+    </div>
+    <div class="sel-grid">
+      <div>
+        <div class="sel-label">問題数</div>
+        <div class="sel-row" id="sel-count"></div>
+      </div>
+      <div>
+        <div class="sel-label">志望校</div>
+        <div class="sel-row" id="sel-school"></div>
+      </div>
+    </div>
+    <button class="bp" id="btn-start-drill">AIドリルを開始する →</button>
+  </div>
+</div>
+
+<!-- DRILL -->
+<div id="v-drill" class="view">
+  <div id="vbanner"></div>
+  <div class="prog-wrap">
+    <div class="prog-meta"><span class="prog-lbl" id="qmeta"></span><span class="prog-pct" id="ppct">0%</span></div>
+    <div class="prog-track"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+  </div>
+  <div id="drill-loading" class="loading-card" style="display:none">
+    <div class="loading-text"><span class="spinner"></span>AIが問題を生成中...</div>
+  </div>
+  <div id="drill-main" style="display:none">
+    <div class="card" style="margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div class="qsubj" id="qsubj"></div>
+        <span id="qsource-tag"></span>
+      </div>
+      <div class="qtext" id="qtext"></div>
+    </div>
+    <div class="ans-wrap">
+      <textarea class="ans-area" id="qans" placeholder="答えをここに書くか、マイクで話してください…"></textarea>
+      <button class="mic-btn" id="mic-btn">
+        <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
+      </button>
+    </div>
+    <div class="vstatus" id="vstatus"></div>
+    <div class="btnrow">
+      <button class="bpr" id="bcheck" style="flex:1">答え合わせ</button>
+      <button class="bs" id="bnext" style="display:none">次へ →</button>
+      <button class="bs" id="bskip">スキップ</button>
+    </div>
+    <div class="fb" id="fb"></div>
+    <div class="aipanel">
+      <div class="aiph" id="ai-header">
+        <span class="aipt" id="aipt">AI サポート</span>
+        <span class="aich" id="aich">▼</span>
+      </div>
+      <div class="aipb" id="aipb" style="display:none">
+        <div class="aibrow" id="aibrow"></div>
+        <div id="aiout" style="font-size:14px;line-height:1.8;color:var(--kt);margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MONTHLY TEST -->
+<div id="v-monthly" class="view">
+  <div id="mt-countdown"></div>
+  <div class="mt-tab-bar">
+    <button class="mt-tab-btn on" id="mt-tab-range">範囲入力</button>
+    <button class="mt-tab-btn" id="mt-tab-drill">範囲ドリル</button>
+    <button class="mt-tab-btn" id="mt-tab-weak">弱点分析</button>
+    <button class="mt-tab-btn" id="mt-tab-exam">日程管理</button>
+  </div>
+  <div id="mt-range">
+    <div class="card">
+      <div class="ctitle">今月の試験範囲を入力</div>
+      <div class="fg">
+        <div class="field"><label>テスト名</label><input id="mt-name" type="text" placeholder="例：6月マンスリーテスト"></div>
+        <div class="field"><label>試験日</label><input id="mt-date" type="date"></div>
+      </div>
+      <div style="margin-bottom:12px"><div class="field"><label>算数の範囲</label><textarea id="mt-math" placeholder="例：速さと比、場合の数、平面図形（相似）"></textarea></div></div>
+      <div style="margin-bottom:12px"><div class="field"><label>国語の範囲</label><textarea id="mt-jpn" placeholder="例：説明文読解、漢字50字、文法（動詞の活用）"></textarea></div></div>
+      <div style="margin-bottom:12px"><div class="field"><label>理科の範囲</label><textarea id="mt-sci" placeholder="例：電気（直列・並列回路、電力）、植物（光合成）"></textarea></div></div>
+      <div style="margin-bottom:16px"><div class="field"><label>社会の範囲</label><textarea id="mt-soc" placeholder="例：明治時代（明治維新〜日清戦争）"></textarea></div></div>
+      <button class="bp" id="btn-save-range">試験範囲を保存する</button>
+    </div>
+    <div id="mt-saved-ranges"></div>
+  </div>
+  <div id="mt-drill" style="display:none"><div id="mt-drill-content"></div></div>
+  <div id="mt-weak" style="display:none"><div id="mt-weak-content"></div></div>
+  <div id="mt-exam" style="display:none">
+    <div class="card">
+      <div class="ctitle">テスト日程を追加</div>
+      <div class="fg">
+        <div class="field"><label>テスト名</label><input id="ex-name" type="text" placeholder="例：7月マンスリーテスト"></div>
+        <div class="field"><label>試験日</label><input id="ex-date" type="date"></div>
+      </div>
+      <button class="bp" id="btn-add-exam">追加する</button>
+    </div>
+    <div class="card"><div class="ctitle">試験スケジュール</div><div id="exam-list"></div></div>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="v-result" class="view">
+  <div class="reswrap">
+    <div class="rescircle" id="rc"></div>
+    <div class="restitle" id="rt"></div>
+    <div class="ressub" id="rs"></div>
+    <div class="resdetail" id="rd"></div>
+    <div class="card" style="text-align:left;margin-bottom:16px">
+      <div class="ctitle">AIコーチからのアドバイス</div>
+      <div id="coachout" style="font-size:14px;line-height:1.8;color:var(--ks)">読み込み中...</div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="bp" style="width:auto;padding:12px 28px" id="res-retry-btn">もう一度</button>
+      <button class="bs" id="res-home-btn">ホームへ</button>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div id="v-history" class="view">
+  <div class="card"><div class="ctitle">ドリル履歴</div><div id="hbody"></div></div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+(function() {
+'use strict';
+
+// ── 定数 ──
+var SAVE_KEY = 'keio-drill-final';
+var MT_KEY = 'keio-mt-data';
+var OLD_KEYS = ['drill-hist2','keio-drill-v3','keio-drill-v4','keio-drill-v5'];
+var SC = {算数:'#0a2463', 国語:'#c8102e', 理科:'#1D9E75', 社会:'#B8960C'};
+var UNITS = {
+  算数: ['速さ','割合','図形','計算','場合の数','比・比例'],
+  国語: ['漢字・語彙','読解','記述・作文','文法'],
+  理科: ['電気','植物','天体・地層','動物・人体','化学変化'],
+  社会: ['地理','歴史','公民・時事']
+};
+var BACKUP = {
+  算数: [{q:'時速60kmで走る電車が3時間で進む距離は何kmですか？',a:'180km',h:'距離＝速さ×時間'},{q:'定価2000円の商品を2割引きで買いました。代金は何円ですか？',a:'1600円',h:'2割引き＝0.8倍'}],
+  国語: [{q:'次の読み方を書きなさい。\n①快晴　②冷静　③節約　④誠実',a:'かいせい れいせい せつやく せいじつ',h:'4つ入っていれば正解'}],
+  理科: [{q:'光合成に必要な3つのものを答えなさい。',a:'水 二酸化炭素 光',h:'3つ入っていれば正解'}],
+  社会: [{q:'江戸幕府を開いた人物と年を答えなさい。',a:'徳川家康 1603',h:'人物と年が入っていれば正解'}]
+};
+
+// ── 状態 ──
+var hist = [];
+var mtData = {ranges:[], exams:[]};
+var recog = null, isListening = false, aiOpen = false, micTimer = null;
+var sess = {qs:[], idx:0, correct:0, answers:[], scores:[], subject:'算数', unit:'速さ', level:'標準', school:'全般', count:5, date:'', aiGenerated:false, isMT:false, mtRangeId:null, backView:'setup'};
+var sel = {subject:'算数', unit:'速さ', level:'標準', count:'5', school:'全般'};
+
+// ── データ ──
+function loadData() {
+  try { var r=localStorage.getItem(SAVE_KEY); hist=r?JSON.parse(r):[]; if(!Array.isArray(hist))hist=[]; } catch(e){ hist=[]; }
+  try { var r=localStorage.getItem(MT_KEY); mtData=r?JSON.parse(r):{ranges:[],exams:[]}; if(!mtData.ranges)mtData.ranges=[]; if(!mtData.exams)mtData.exams=[]; } catch(e){ mtData={ranges:[],exams:[]}; }
+}
+function saveData() {
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(hist)); } catch(e){}
+  try { localStorage.setItem(MT_KEY, JSON.stringify(mtData)); } catch(e){}
+}
+
+// ── 判定 ──
+function norm(s) {
+  return s.replace(/[　\t\r\n]/g,' ')
+    .replace(/[①②③④⑤]/g,'')
+    .replace(/[０-９]/g, function(c){ return String.fromCharCode(c.charCodeAt(0)-0xFEE0); })
+    .replace(/[、，,・]/g,' ')
+    .replace(/\s+/g,' ').trim().toLowerCase();
+}
+function chkOk(ans, correct) {
+  var na=norm(ans), nc=norm(correct);
+  if(na===nc || na.indexOf(nc)>=0 || nc.indexOf(na)>=0) return true;
+  var kw=nc.split(/[\s\/。]+/).filter(function(w){return w.length>=2;});
+  if(!kw.length) return false;
+  var m=kw.filter(function(k){return na.indexOf(k)>=0;});
+  return kw.length<=2 ? m.length===kw.length : m.length/kw.length>=0.7;
+}
+
+// ── API ──
+function callAPI(system, user, maxT, cb) {
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:maxT||800, system:system, messages:[{role:'user',content:user}]})
+  }).then(function(r){ return r.json(); }).then(function(d){
+    var text = (d.content||[]).map(function(c){return c.text||'';}).join('');
+    cb(null, text);
+  }).catch(function(e){ cb(e, ''); });
+}
+
+// ── ナビゲーション ──
+function gv(name) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+  document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('on'); });
+  var view = document.getElementById('v-'+name);
+  var nav = document.getElementById('nav-'+name);
+  if(view) view.classList.add('on');
+  if(nav) nav.classList.add('on');
+  if(name==='home') { renderHome(); renderMtNextCard(); }
+  if(name==='history') renderHist();
+  if(name==='setup') renderSelButtons();
+  if(name==='monthly') { renderMtCountdown(); renderSavedRanges(); mtTabShow('range'); }
+}
+
+// ── 選択ボタン ──
+function makeSelBtn(label, val, groupId, isOn) {
+  var btn = document.createElement('button');
+  btn.className = 'sel-btn' + (isOn ? ' on' : '');
+  btn.textContent = label;
+  btn.addEventListener('click', function() {
+    var parent = document.getElementById(groupId);
+    parent.querySelectorAll('.sel-btn').forEach(function(b){ b.classList.remove('on'); });
+    btn.classList.add('on');
+    sel[groupId.replace('sel-','')] = val;
+    if(groupId === 'sel-subject') renderUnitBtns();
+  });
+  return btn;
+}
+
+function renderSelButtons() {
+  var subjects = ['算数','国語','理科','社会'];
+  var el = document.getElementById('sel-subject');
+  el.innerHTML = '';
+  subjects.forEach(function(s) {
+    el.appendChild(makeSelBtn(s, s, 'sel-subject', sel.subject===s));
+  });
+  renderUnitBtns();
+
+  var levels = [{label:'基礎',val:'基礎'},{label:'標準',val:'標準'},{label:'応用（慶應）',val:'応用'}];
+  var elL = document.getElementById('sel-level'); elL.innerHTML='';
+  levels.forEach(function(x){ elL.appendChild(makeSelBtn(x.label, x.val, 'sel-level', sel.level===x.val)); });
+
+  var counts = ['3','5','8'];
+  var elC = document.getElementById('sel-count'); elC.innerHTML='';
+  counts.forEach(function(x){ elC.appendChild(makeSelBtn(x+'問', x, 'sel-count', sel.count===x)); });
+
+  var schools = ['全般','普通部','中等部','SFC'];
+  var elS = document.getElementById('sel-school'); elS.innerHTML='';
+  schools.forEach(function(x){ elS.appendChild(makeSelBtn(x, x, 'sel-school', sel.school===x)); });
+}
+
+function renderUnitBtns() {
+  var units = UNITS[sel.subject] || [];
+  if(units.indexOf(sel.unit) < 0) sel.unit = units[0]||'';
+  var el = document.getElementById('sel-unit'); el.innerHTML='';
+  units.forEach(function(u) {
+    el.appendChild(makeSelBtn(u, u, 'sel-unit', sel.unit===u));
+  });
+}
+
+// ── ドリル開始 ──
+function startDrill() {
+  var subject = sel.subject;
+  var unit = sel.unit || UNITS[sel.subject][0];
+  var level = sel.level;
+  var count = parseInt(sel.count);
+  var school = sel.school;
+  sess = {qs:[], idx:0, correct:0, answers:[], scores:[], subject:subject, unit:unit, level:level, school:school, count:count, date:new Date().toISOString().split('T')[0], aiGenerated:false, isMT:false, mtRangeId:null, backView:'setup'};
+  runDrillSetup(subject, unit, level, count, school, '', false);
+}
+
+function startMtDrillWith(rangeId, subject, level, count, school) {
+  var range = mtData.ranges.filter(function(r){ return r.id===rangeId; })[0];
+  if(!range) return;
+  var rangeText = range.ranges[subject] || '';
+  sess = {qs:[], idx:0, correct:0, answers:[], scores:[], subject:subject, unit:'マンスリーテスト範囲', level:level, school:school, count:count, date:new Date().toISOString().split('T')[0], aiGenerated:false, isMT:true, mtRangeId:rangeId, backView:'monthly'};
+  runDrillSetup(subject, 'マンスリーテスト範囲', level, count, school, rangeText, true);
+}
+
+function runDrillSetup(subject, unit, level, count, school, rangeText, isMT) {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+  document.querySelectorAll('.nb').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('v-drill').classList.add('on');
+  document.getElementById('drill-loading').style.display = 'block';
+  document.getElementById('drill-main').style.display = 'none';
+  document.getElementById('qmeta').textContent = subject + '：' + unit + ' — AI生成中...';
+  document.getElementById('ppct').textContent = '';
+
+  var sStr = school==='全般' ? '慶應義塾中学受験全般' : '慶應義塾'+school;
+  var rangeNote = rangeText ? '\n\n【試験範囲】\n' + rangeText : '';
+  var prompt = '小学6年生向けの中学受験問題を' + count + '問作成してください。\n科目：' + subject + '、単元：' + unit + '、難易度：' + level + '、志望校：' + sStr + rangeNote + '\n\nJSON形式のみで返してください（他のテキスト不要）：\n{"questions":[{"q":"問題文","a":"正答キーワード（スペース区切り）","h":"ポイント（15字以内）"},...]}';
+
+  callAPI('中学受験専門の出題AIです。指定されたJSON形式のみで返してください。', prompt, 1200, function(err, raw) {
+    var qs = null;
+    if(!err && raw) {
+      try {
+        var clean = raw.replace(/```json|```/g,'').trim();
+        qs = JSON.parse(clean).questions;
+        sess.aiGenerated = true;
+      } catch(e) { qs = null; }
+    }
+    if(!qs || !qs.length) {
+      qs = (BACKUP[subject]||[]).slice(0, count);
+      sess.aiGenerated = false;
+    }
+    if(!qs.length) {
+      document.getElementById('drill-loading').style.display = 'none';
+      alert('問題の生成に失敗しました。インターネット接続を確認してください。');
+      gv(sess.backView); return;
+    }
+    sess.qs = qs;
+    document.getElementById('drill-loading').style.display = 'none';
+    document.getElementById('drill-main').style.display = 'block';
+    renderQ();
+  });
+}
+
+// ── 問題描画 ──
+function renderQ() {
+  var q = sess.qs[sess.idx], total = sess.qs.length;
+  var pct = Math.round(sess.idx/total*100);
+  document.getElementById('prog').style.width = pct+'%';
+  document.getElementById('ppct').textContent = pct+'%';
+  document.getElementById('qmeta').textContent = '問題 '+(sess.idx+1)+' / '+total+'　'+sess.subject+'：'+sess.unit+'（'+sess.level+'）';
+  document.getElementById('qsubj').textContent = sess.subject + ' — ' + sess.unit;
+  var tagEl = document.getElementById('qsource-tag');
+  tagEl.innerHTML = '';
+  var tag = document.createElement('span');
+  tag.className = sess.isMT ? 'tag-mt' : (sess.aiGenerated ? 'tag-ai' : 'tag-db');
+  tag.textContent = sess.isMT ? 'マンスリーテスト' : (sess.aiGenerated ? 'AI生成' : '内蔵問題');
+  tagEl.appendChild(tag);
+  document.getElementById('qtext').textContent = q.q;
+  document.getElementById('qans').value = '';
+  document.getElementById('fb').style.display = 'none';
+  document.getElementById('bcheck').style.display = '';
+  document.getElementById('bnext').style.display = 'none';
+  document.getElementById('aiout').textContent = '';
+  document.getElementById('vstatus').className = 'vstatus';
+  document.getElementById('aipb').style.display = 'none';
+  document.getElementById('aich').textContent = '▼';
+  document.getElementById('aipt').textContent = 'AI サポート';
+  document.querySelectorAll('.aib').forEach(function(b){ b.classList.remove('on'); });
+  aiOpen = false;
+}
+
+function checkA() {
+  var ans = document.getElementById('qans').value.trim();
+  if(!ans) { alert('答えを入力してください。'); return; }
+  if(isListening && recog) recog.stop();
+  var q = sess.qs[sess.idx];
+  sess.answers.push(ans);
+  var ok = chkOk(ans, q.a);
+  sess.scores.push(ok ? '正解' : '不正解');
+  if(ok) sess.correct++;
+  var fb = document.getElementById('fb');
+  fb.style.display = 'block';
+  fb.className = 'fb ' + (ok ? 'ok' : 'ng');
+  fb.textContent = (ok ? '正解！\n\n' : 'もう少し！\n\n') + '正答：' + q.a + (q.h ? '\n\nポイント：'+q.h : '');
+  document.getElementById('bcheck').style.display = 'none';
+  document.getElementById('bnext').style.display = '';
+  if(!ok) {
+    aiOpen = true;
+    document.getElementById('aipb').style.display = '';
+    document.getElementById('aich').textContent = '▲';
+    document.getElementById('aipt').textContent = 'AI サポート — 解説を見よう';
+    runAI('explain');
+  }
+}
+
+function nextQ() { sess.idx++; if(sess.idx>=sess.qs.length) finishDrill(); else renderQ(); }
+function skipQ() {
+  if(isListening && recog) recog.stop();
+  sess.answers.push(''); sess.scores.push('スキップ');
+  sess.idx++; if(sess.idx>=sess.qs.length) finishDrill(); else renderQ();
+}
+
+function togAI() {
+  aiOpen = !aiOpen;
+  document.getElementById('aipb').style.display = aiOpen ? '' : 'none';
+  document.getElementById('aich').textContent = aiOpen ? '▲' : '▼';
+}
+
+function runAI(type) {
+  document.querySelectorAll('.aib').forEach(function(b){ b.classList.remove('on'); });
+  var activeBtn = document.querySelector('.aib[data-type="'+type+'"]');
+  if(activeBtn) activeBtn.classList.add('on');
+  var out = document.getElementById('aiout');
+  out.innerHTML = '<span style="color:var(--ks)"><span class="spinner"></span>AIが考え中...</span>';
+  var q = sess.qs[sess.idx];
+  var ans = sess.answers[sess.answers.length-1] || '（未回答）';
+  var prompts = {
+    hint: 'この問題のヒントを1〜2文で。答えは言わないでください。\n科目：' + sess.subject + '、単元：' + sess.unit + '\n問題：' + q.q,
+    explain: 'この問題を小学6年生向けにステップごとに丁寧に解説してください。\n問題：' + q.q + '\n正答：' + q.a + '\n生徒の答え：' + ans,
+    similar: '同じ単元の類題を1問と解答を作ってください。難易度：' + sess.level + '\n科目：' + sess.subject + '、単元：' + sess.unit,
+    why: '間違えた理由を分析して、改善アドバイスを2〜3文で。\n問題：' + q.q + '\n正答：' + q.a + '\n生徒の答え：' + ans
+  };
+  callAPI('慶應義塾中学受験専門の家庭教師AIです。小学6年生の男の子に、やさしく丁寧に教えてください。', prompts[type], 700, function(err, text) {
+    out.textContent = err ? 'AI接続エラー。インターネット接続を確認してください。' : (text || 'エラーが発生しました。');
+  });
+}
+
+function finishDrill() {
+  var total=sess.qs.length, correct=sess.correct, pct=Math.round(correct/total*100);
+  var grade = pct>=90?'S':pct>=70?'A':pct>=50?'B':'C';
+  var gc = {S:'#1f5c0f', A:'#0a2463', B:'#854F0B', C:'#c8102e'};
+  document.getElementById('rc').textContent = grade;
+  document.getElementById('rc').style.color = gc[grade];
+  document.getElementById('rc').style.borderColor = gc[grade];
+  document.getElementById('rt').textContent = correct+'/'+total+'問正解（'+pct+'%）';
+  document.getElementById('rs').textContent = {S:'完璧！慶應合格に近づいています！',A:'よくできました！',B:'あと少し！復習して再挑戦。',C:'基礎から確認しましょう。'}[grade];
+  var wrongs = sess.qs.filter(function(_,i){ return sess.scores[i]!=='正解'; }).map(function(q,i){ return '・問'+(i+1)+'：'+q.a; }).join('\n');
+  document.getElementById('rd').textContent = wrongs ? '間違えた問題の正答：\n'+wrongs : '全問正解！素晴らしい！';
+  hist.unshift({date:sess.date, subject:sess.subject, unit:sess.unit, level:sess.level, school:sess.school, total:total, correct:correct, grade:grade, ai:sess.aiGenerated, isMT:sess.isMT});
+  if(hist.length>200) hist=hist.slice(0,200);
+  saveData();
+  document.getElementById('res-retry-btn').onclick = function(){ gv(sess.backView); };
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+  document.getElementById('v-result').classList.add('on');
+  var ce = document.getElementById('coachout');
+  var mistakes = sess.qs.filter(function(_,i){ return sess.scores[i]!=='正解'; }).map(function(q,i){ return '問'+(i+1)+'（'+q.a+'）'; }).join('、');
+  callAPI(
+    '慶應受験を目指す小学6年生へのコーチとして、励ましながら具体的な次の学習アドバイスを3文以内で。',
+    '科目：'+sess.subject+'、単元：'+sess.unit+'、難易度：'+sess.level+'、正答率：'+pct+'%\n間違えた問題：'+(mistakes||'なし（全問正解）'),
+    300, function(err, text) {
+      ce.textContent = err ? 'お疲れ様でした！次も頑張りましょう。' : (text || 'お疲れ様でした！');
+      ce.style.color = 'var(--kt)';
+    });
+}
+
+// ── ホーム ──
+function renderHome() {
+  var tq=hist.reduce(function(a,h){return a+h.total;},0), tc=hist.reduce(function(a,h){return a+h.correct;},0);
+  var statsEl = document.getElementById('hstats');
+  statsEl.innerHTML = '';
+  [{label:'ドリル回数',val:hist.length,unit:'回'},{label:'総問題数',val:tq,unit:'問'},{label:'平均正答率',val:(tq>0?Math.round(tc/tq*100):0),unit:'%'}].forEach(function(s){
+    var d=document.createElement('div'); d.className='sc';
+    d.innerHTML = '<div class="sl">'+s.label+'</div><div class="sv">'+s.val+'<span class="su"> '+s.unit+'</span></div>';
+    statsEl.appendChild(d);
+  });
+  var chartEl = document.getElementById('achart'); chartEl.innerHTML='';
+  ['算数','国語','理科','社会'].forEach(function(s){
+    var sh=hist.filter(function(h){return h.subject===s;});
+    var pct=sh.length?Math.round(sh.reduce(function(a,h){return a+h.correct;},0)/sh.reduce(function(a,h){return a+h.total;},0)*100):0;
+    var row=document.createElement('div'); row.className='brow';
+    row.innerHTML='<div class="blbl">'+s+'</div><div class="btrack"><div class="bfill" style="width:'+pct+'%;background:'+SC[s]+'"></div></div><div class="bpct">'+(sh.length?pct+'%':'—')+'</div>';
+    chartEl.appendChild(row);
+  });
+  var qlEl = document.getElementById('qlist'); qlEl.innerHTML='';
+  [{s:'算数',u:'速さ',l:'標準',sc:'全般'},{s:'算数',u:'割合',l:'応用',sc:'普通部'},{s:'国語',u:'漢字・語彙',l:'基礎',sc:'全般'},{s:'理科',u:'電気',l:'標準',sc:'中等部'},{s:'社会',u:'歴史',l:'標準',sc:'全般'}].forEach(function(r){
+    var row=document.createElement('div'); row.className='qrow';
+    row.innerHTML='<span class="qlbl">'+r.s+'：'+r.u+'</span><span class="qlvl">'+r.l+'</span>';
+    row.addEventListener('click', function(){ loadPreset(r.s,r.u,r.l,r.sc); });
+    qlEl.appendChild(row);
+  });
+  renderDataMgmt();
+}
+
+function renderDataMgmt() {
+  var el = document.getElementById('data-mgmt');
+  if(!el) return;
+  el.innerHTML = '';
+
+  // 過去データが存在する場合は移行ボタンを表示
+  var old = [];
+  OLD_KEYS.forEach(function(k){
+    try{ var r=localStorage.getItem(k); if(r){var d=JSON.parse(r);if(Array.isArray(d)&&d.length)old=old.concat(d);} }catch(e){}
+  });
+
+  if(old.length > 0) {
+    var card = document.createElement('div'); card.className = 'card';
+    card.style.cssText = 'background:linear-gradient(135deg,var(--kn),var(--kn2));';
+    var title = document.createElement('div');
+    title.style.cssText = 'font-size:13px;font-weight:700;color:#fff;margin-bottom:6px';
+    title.textContent = '過去のデータが見つかりました（' + old.length + '件）';
+    var sub = document.createElement('div');
+    sub.style.cssText = 'font-size:12px;color:rgba(255,255,255,.8);margin-bottom:12px';
+    sub.textContent = '以前のバージョンで記録したドリル履歴を引き継げます。';
+    var btn = document.createElement('button');
+    btn.style.cssText = 'font-size:13px;font-weight:700;padding:9px 20px;background:var(--kr);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit;width:100%';
+    btn.textContent = 'データを引き継ぐ';
+    btn.addEventListener('click', function(){
+      var ex = new Set(hist.map(function(h){return h.date+'-'+h.subject+'-'+h.unit;}));
+      var nd = old.filter(function(h){return !ex.has(h.date+'-'+h.subject+'-'+h.unit);});
+      hist = hist.concat(nd).sort(function(a,b){return b.date.localeCompare(a.date);}).slice(0,200);
+      saveData();
+      OLD_KEYS.forEach(function(k){ try{ localStorage.removeItem(k); }catch(e){} });
+      localStorage.setItem('keio-migrated','1');
+      renderHome();
+      alert(nd.length + '件のデータを引き継ぎました！');
+    });
+    card.appendChild(title); card.appendChild(sub); card.appendChild(btn);
+    el.appendChild(card);
+  }
+}
+
+function loadPreset(s,u,l,sc) {
+  sel.subject=s; sel.unit=u; sel.level=l; sel.school=sc||'全般'; sel.count='5';
+  gv('setup');
+}
+
+function renderMtNextCard() {
+  var el = document.getElementById('mt-next-card');
+  el.innerHTML = '';
+  var upcoming = mtData.exams.filter(function(e){ return getDaysLeft(e.date)>=0; }).sort(function(a,b){ return a.date.localeCompare(b.date); });
+  if(!upcoming.length) return;
+  var next=upcoming[0], days=getDaysLeft(next.date), urgent=days<=7;
+  var div = document.createElement('div');
+  div.style.cssText = 'background:linear-gradient(135deg,'+(urgent?'var(--kr),var(--kr2)':'var(--kn),var(--kn2)')+');border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer';
+  div.innerHTML = '<div><div style="font-size:11px;color:rgba(255,255,255,.7);font-weight:600;margin-bottom:3px">次回テスト</div><div style="font-size:14px;font-weight:700;color:#fff">'+next.name+'</div><div style="font-size:12px;color:rgba(255,255,255,.75);margin-top:2px">'+next.date+'</div></div><div style="text-align:right"><div style="font-size:32px;font-weight:800;color:'+(urgent?'#ffd580':'#fff')+';line-height:1">'+days+'</div><div style="font-size:11px;color:rgba(255,255,255,.75)">日後</div></div>';
+  div.addEventListener('click', function(){ gv('monthly'); });
+  el.appendChild(div);
+}
+
+// ── 履歴 ──
+function renderHist() {
+  var el = document.getElementById('hbody');
+  if(!hist.length) { el.innerHTML='<div style="font-size:14px;color:var(--ks);padding:14px 0;text-align:center">まだ履歴がありません。</div>'; return; }
+  var gs = {S:'gs',A:'ga',B:'gb',C:'gc'};
+  el.innerHTML = '';
+  var hdr=document.createElement('div'); hdr.className='hgrid hhdr';
+  hdr.innerHTML='<span>日付</span><span>科目</span><span>単元</span><span>正答率</span><span>学校</span><span>評価</span>';
+  el.appendChild(hdr);
+  hist.slice(0,30).forEach(function(h){
+    var row=document.createElement('div'); row.className='hgrid hrow';
+    var mtBadge = h.isMT ? '<span class="tag-mt" style="margin-right:4px">MT</span>' : '';
+    row.innerHTML='<span>'+h.date+'</span><span style="color:'+SC[h.subject]+';font-weight:700">'+h.subject+'</span><span style="font-size:12px">'+mtBadge+h.unit+'</span><span style="font-weight:700">'+Math.round(h.correct/h.total*100)+'%</span><span style="font-size:11px">'+(h.school||'—')+'</span><span><span class="badge '+gs[h.grade]+'">'+h.grade+'</span></span>';
+    el.appendChild(row);
+  });
+}
+
+// ── 月テスト ──
+function mtTabShow(tab) {
+  ['range','drill','weak','exam'].forEach(function(t){
+    document.getElementById('mt-'+t).style.display = t===tab ? '' : 'none';
+    var btn = document.getElementById('mt-tab-'+t);
+    if(btn) btn.classList.toggle('on', t===tab);
+  });
+  if(tab==='drill') renderMtDrill();
+  if(tab==='weak') renderMtWeak();
+  if(tab==='exam') renderExamList();
+}
+
+function saveMtRange() {
+  var name=document.getElementById('mt-name').value.trim();
+  var date=document.getElementById('mt-date').value;
+  var math=document.getElementById('mt-math').value.trim();
+  var jpn=document.getElementById('mt-jpn').value.trim();
+  var sci=document.getElementById('mt-sci').value.trim();
+  var soc=document.getElementById('mt-soc').value.trim();
+  if(!name) { alert('テスト名を入力してください。'); return; }
+  if(!math&&!jpn&&!sci&&!soc) { alert('少なくとも1科目の範囲を入力してください。'); return; }
+  var range = {id:Date.now(), name:name, date:date, ranges:{算数:math,国語:jpn,理科:sci,社会:soc}};
+  mtData.ranges.unshift(range);
+  if(mtData.ranges.length>12) mtData.ranges=mtData.ranges.slice(0,12);
+  if(date&&name) {
+    mtData.exams = mtData.exams.filter(function(e){ return e.name!==name; });
+    mtData.exams.push({id:Date.now()+1, name:name, date:date});
+    mtData.exams.sort(function(a,b){ return a.date.localeCompare(b.date); });
+  }
+  saveData();
+  ['mt-name','mt-date','mt-math','mt-jpn','mt-sci','mt-soc'].forEach(function(id){ document.getElementById(id).value=''; });
+  renderSavedRanges(); renderMtCountdown(); renderMtNextCard();
+  alert('試験範囲を保存しました！');
+}
+
+function renderSavedRanges() {
+  var el = document.getElementById('mt-saved-ranges');
+  el.innerHTML = '';
+  mtData.ranges.slice(0,3).forEach(function(r){
+    var card = document.createElement('div'); card.className='card';
+    var header = document.createElement('div');
+    header.style.cssText='display:flex;align-items:center;justify-content:space-between;margin-bottom:10px';
+    header.innerHTML='<div style="font-size:14px;font-weight:700;color:var(--kn)">'+r.name+'</div><div style="font-size:12px;color:var(--ks)">'+(r.date||'日付未設定')+'</div>';
+    card.appendChild(header);
+    Object.entries(r.ranges).forEach(function(entry){
+      if(!entry[1]) return;
+      var d=document.createElement('div'); d.style.marginBottom='8px';
+      d.innerHTML='<div style="font-size:11px;font-weight:700;color:'+SC[entry[0]]+';margin-bottom:3px">'+entry[0]+'</div><div style="font-size:13px;color:var(--ks);line-height:1.6">'+entry[1]+'</div>';
+      card.appendChild(d);
+    });
+    var btns=document.createElement('div'); btns.style.cssText='display:flex;gap:8px;margin-top:12px';
+    var startBtn=document.createElement('button'); startBtn.className='bpg'; startBtn.style.flex='1'; startBtn.style.fontSize='13px'; startBtn.style.padding='9px'; startBtn.textContent='この範囲でドリル →';
+    startBtn.addEventListener('click', (function(id){ return function(){ startMtDrill(id); }; })(r.id));
+    var delBtn=document.createElement('button'); delBtn.className='bs'; delBtn.style.fontSize='12px'; delBtn.style.padding='8px 12px'; delBtn.textContent='削除';
+    delBtn.addEventListener('click', (function(id){ return function(){ deleteMtRange(id); }; })(r.id));
+    btns.appendChild(startBtn); btns.appendChild(delBtn);
+    card.appendChild(btns);
+    el.appendChild(card);
+  });
+}
+
+function deleteMtRange(id) {
+  mtData.ranges = mtData.ranges.filter(function(r){ return r.id!==id; });
+  saveData(); renderSavedRanges();
+}
+
+function startMtDrill(rangeId) {
+  var range = mtData.ranges.filter(function(r){ return r.id===rangeId; })[0];
+  if(!range) return;
+  var subjects = Object.entries(range.ranges).filter(function(e){ return e[1]; });
+  if(!subjects.length) { alert('試験範囲が入力されていません。'); return; }
+  startMtDrillWith(rangeId, subjects[0][0], '標準', 5, '全般');
+}
+
+function renderMtDrill() {
+  var el = document.getElementById('mt-drill-content'); el.innerHTML='';
+  if(!mtData.ranges.length) {
+    el.innerHTML='<div class="card" style="text-align:center;padding:24px;color:var(--ks);font-size:14px">まず「範囲入力」タブで範囲を登録してください。</div>';
+    return;
+  }
+  var latest = mtData.ranges[0];
+  var subjects = Object.entries(latest.ranges).filter(function(e){ return e[1]; });
+  var card = document.createElement('div'); card.className='card'; card.style.marginBottom='12px';
+
+  var info=document.createElement('div');
+  info.innerHTML='<div style="font-size:13px;font-weight:700;color:var(--kn);margin-bottom:4px">'+latest.name+'</div><div style="font-size:12px;color:var(--ks);margin-bottom:12px">'+(latest.date||'')+' の試験範囲から出題</div>';
+  card.appendChild(info);
+
+  // 科目選択
+  var subjLabel=document.createElement('div'); subjLabel.className='sel-label'; subjLabel.textContent='科目';
+  var subjRow=document.createElement('div'); subjRow.className='sel-row'; subjRow.id='mt-drill-subj-row';
+  var selSubj = subjects[0]?subjects[0][0]:'算数';
+  subjects.forEach(function(e,i){
+    var btn=document.createElement('button'); btn.className='sel-btn'+(i===0?' on':'');
+    btn.textContent=e[0];
+    btn.addEventListener('click', function(){
+      subjRow.querySelectorAll('.sel-btn').forEach(function(b){b.classList.remove('on');});
+      btn.classList.add('on'); selSubj=e[0];
+    });
+    subjRow.appendChild(btn);
+  });
+  card.appendChild(subjLabel); card.appendChild(subjRow);
+
+  // 難易度・問題数
+  var grid=document.createElement('div'); grid.className='fg'; grid.style.marginTop='12px';
+  var lvlDiv=document.createElement('div');
+  lvlDiv.innerHTML='<div class="sel-label">難易度</div><div class="sel-row" id="mt-drill-lvl-row"></div>';
+  var cntDiv=document.createElement('div');
+  cntDiv.innerHTML='<div class="sel-label">問題数</div><div class="sel-row" id="mt-drill-cnt-row"></div>';
+  grid.appendChild(lvlDiv); grid.appendChild(cntDiv);
+  card.appendChild(grid);
+
+  var startBtn=document.createElement('button'); startBtn.className='bpg'; startBtn.style.width='100%'; startBtn.style.marginTop='14px'; startBtn.textContent='範囲内AIドリルを開始する →';
+  startBtn.addEventListener('click', function(){
+    var lvlEl=document.querySelector('#mt-drill-lvl-row .sel-btn.on');
+    var cntEl=document.querySelector('#mt-drill-cnt-row .sel-btn.on');
+    var lvl=lvlEl?lvlEl.textContent:'標準';
+    var cnt=cntEl?parseInt(cntEl.textContent):5;
+    startMtDrillWith(latest.id, selSubj, lvl, cnt, '全般');
+  });
+  card.appendChild(startBtn);
+  el.appendChild(card);
+
+  // 難易度・問題数ボタン描画
+  [['標準','基礎','応用']].forEach(function(){});
+  var lvlRow=document.getElementById('mt-drill-lvl-row');
+  ['基礎','標準','応用'].forEach(function(l,i){
+    var btn=document.createElement('button'); btn.className='sel-btn'+(i===1?' on':'');
+    btn.textContent=l;
+    btn.addEventListener('click', function(){ lvlRow.querySelectorAll('.sel-btn').forEach(function(b){b.classList.remove('on');}); btn.classList.add('on'); });
+    lvlRow.appendChild(btn);
+  });
+  var cntRow=document.getElementById('mt-drill-cnt-row');
+  ['3','5'].forEach(function(c,i){
+    var btn=document.createElement('button'); btn.className='sel-btn'+(i===1?' on':'');
+    btn.textContent=c+'問';
+    btn.addEventListener('click', function(){ cntRow.querySelectorAll('.sel-btn').forEach(function(b){b.classList.remove('on');}); btn.classList.add('on'); });
+    cntRow.appendChild(btn);
+  });
+
+  // 過去のテスト
+  mtData.ranges.slice(1,4).forEach(function(r){
+    var mini=document.createElement('div'); mini.className='card'; mini.style.padding='12px';
+    mini.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:13px;font-weight:600;color:var(--kn)">'+r.name+'</div></div>';
+    var btn=document.createElement('button'); btn.className='bpg'; btn.style.fontSize='12px'; btn.style.padding='7px 14px'; btn.textContent='ドリル開始 →';
+    btn.addEventListener('click', (function(id){ return function(){ startMtDrill(id); }; })(r.id));
+    mini.querySelector('div > div').parentElement.appendChild(btn);
+    el.appendChild(mini);
+  });
+}
+
+function renderMtWeak() {
+  var el = document.getElementById('mt-weak-content'); el.innerHTML='';
+  if(!hist.length) { el.innerHTML='<div class="card" style="text-align:center;padding:24px;color:var(--ks);font-size:14px">まだドリルの記録がありません。</div>'; return; }
+  var stats={};
+  hist.slice(0,50).forEach(function(h){
+    if(!stats[h.subject]) stats[h.subject]={total:0,correct:0};
+    stats[h.subject].total+=h.total; stats[h.subject].correct+=h.correct;
+  });
+  var weak = Object.entries(stats).map(function(e){
+    return {subject:e[0], rate:e[1].total>0?Math.round(e[1].correct/e[1].total*100):0, total:e[1].total};
+  }).filter(function(x){return x.total>=3;}).sort(function(a,b){return a.rate-b.rate;});
+  if(!weak.length) { el.innerHTML='<div class="card" style="text-align:center;padding:24px;color:var(--ks);font-size:14px">まだ十分なデータがありません。</div>'; return; }
+
+  var rankCard=document.createElement('div'); rankCard.className='card';
+  var rt=document.createElement('div'); rt.className='ctitle'; rt.textContent='科目別 弱点ランキング';
+  rankCard.appendChild(rt);
+  weak.forEach(function(x){
+    var row=document.createElement('div'); row.className='brow';
+    var color=x.rate<50?'var(--kr)':x.rate<70?'var(--ko)':'#1D9E75';
+    row.innerHTML='<div class="blbl">'+x.subject+'</div><div class="btrack"><div class="bfill" style="width:'+x.rate+'%;background:'+color+'"></div></div><div class="bpct">'+x.rate+'%</div>';
+    rankCard.appendChild(row);
+  });
+  el.appendChild(rankCard);
+
+  var advCard=document.createElement('div'); advCard.className='card';
+  var at=document.createElement('div'); at.className='ctitle'; at.textContent='AIによる弱点対策アドバイス';
+  var advOut=document.createElement('div'); advOut.id='weak-ai-out'; advOut.style.cssText='font-size:14px;line-height:1.8;color:var(--ks)';
+  var advBtn=document.createElement('button'); advBtn.className='bpg'; advBtn.style.width='100%'; advBtn.textContent='AIに弱点対策を聞く';
+  advBtn.addEventListener('click', function() {
+    advOut.innerHTML='<span class="spinner"></span>AIが分析中...';
+    var summary=Object.entries(stats).map(function(e){ return e[0]+'：正答率'+Math.round(e[1].correct/e[1].total*100)+'%'; }).join('、');
+    var latestRange=mtData.ranges[0];
+    var rangeInfo=latestRange?'\n\n次回テスト「'+latestRange.name+'」の範囲：\n'+Object.entries(latestRange.ranges).filter(function(e){return e[1];}).map(function(e){return e[0]+'（'+e[1]+'）';}).join('\n'):'';
+    callAPI('慶應受験を目指す小学6年生へのコーチです。弱点を分析して対策を提案してください。','最近の学習記録：'+summary+rangeInfo+'\n\n①弱点の原因②今週やるべき具体的な対策③次のテストに向けた一言を教えてください。',600,function(err,text){
+      advOut.textContent=err?'AI接続エラー。':(text||'エラーが発生しました。');
+      advOut.style.color='var(--kt)';
+    });
+  });
+  advOut.appendChild(advBtn);
+  advCard.appendChild(at); advCard.appendChild(advOut);
+  el.appendChild(advCard);
+
+  if(mtData.ranges.length) {
+    var drillCard=document.createElement('div'); drillCard.className='card';
+    var dt=document.createElement('div'); dt.className='ctitle'; dt.textContent='弱点科目を集中ドリル';
+    drillCard.appendChild(dt);
+    weak.slice(0,2).forEach(function(x){
+      var row=document.createElement('div');
+      row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--kb)';
+      var info=document.createElement('div');
+      info.innerHTML='<span class="weakness-subj">'+x.subject+'</span><span class="weakness-count">正答率'+x.rate+'%</span>';
+      var btn=document.createElement('button'); btn.className='bpr'; btn.style.cssText='font-size:12px;padding:7px 14px'; btn.textContent='強化ドリル →';
+      btn.addEventListener('click', (function(subj){ return function(){ startMtDrillWith(mtData.ranges[0].id,subj,'応用',5,'全般'); }; })(x.subject));
+      row.appendChild(info); row.appendChild(btn);
+      drillCard.appendChild(row);
+    });
+    el.appendChild(drillCard);
+  }
+}
+
+function getDaysLeft(dateStr) {
+  var today=new Date(); today.setHours(0,0,0,0);
+  var target=new Date(dateStr); target.setHours(0,0,0,0);
+  return Math.round((target-today)/(1000*60*60*24));
+}
+
+function addExam() {
+  var name=document.getElementById('ex-name').value.trim();
+  var date=document.getElementById('ex-date').value;
+  if(!name||!date) { alert('テスト名と日付を入力してください。'); return; }
+  mtData.exams=mtData.exams.filter(function(e){return e.name!==name;});
+  mtData.exams.push({id:Date.now(),name:name,date:date});
+  mtData.exams.sort(function(a,b){return a.date.localeCompare(b.date);});
+  saveData();
+  document.getElementById('ex-name').value=''; document.getElementById('ex-date').value='';
+  renderExamList(); renderMtCountdown(); renderMtNextCard();
+}
+
+function renderExamList() {
+  var el=document.getElementById('exam-list'); el.innerHTML='';
+  if(!mtData.exams.length) { el.innerHTML='<div style="font-size:14px;color:var(--ks);padding:12px 0;text-align:center">まだ日程が登録されていません。</div>'; return; }
+  mtData.exams.forEach(function(e){
+    var days=getDaysLeft(e.date);
+    var row=document.createElement('div'); row.className='mt-exam-row';
+    var tagClass=days<0?'days-done':days<=7?'days-soon':'days-ok';
+    var tagText=days<0?'終了':'残り'+days+'日';
+    var left=document.createElement('div');
+    left.innerHTML='<div class="mt-exam-name">'+e.name+'</div><div class="mt-exam-date">'+e.date+'</div>';
+    var right=document.createElement('div'); right.style.cssText='display:flex;align-items:center;gap:8px';
+    var tag=document.createElement('span'); tag.className='mt-exam-days '+tagClass; tag.textContent=tagText;
+    var delBtn=document.createElement('button'); delBtn.style.cssText='font-size:12px;padding:5px 10px;border:1px solid var(--kb);border-radius:6px;background:none;cursor:pointer;color:var(--ks);font-family:inherit'; delBtn.textContent='削除';
+    delBtn.addEventListener('click', (function(id){ return function(){ deleteExam(id); }; })(e.id));
+    right.appendChild(tag); right.appendChild(delBtn);
+    var wrap=document.createElement('div'); wrap.style.cssText='display:flex;align-items:center;justify-content:space-between';
+    wrap.appendChild(left); wrap.appendChild(right);
+    row.appendChild(wrap); el.appendChild(row);
+  });
+}
+
+function deleteExam(id) {
+  mtData.exams=mtData.exams.filter(function(e){return e.id!==id;});
+  saveData(); renderExamList(); renderMtCountdown(); renderMtNextCard();
+}
+
+function renderMtCountdown() {
+  var el=document.getElementById('mt-countdown'); if(!el){return;}
+  el.innerHTML='';
+  var upcoming=mtData.exams.filter(function(e){return getDaysLeft(e.date)>=0;}).sort(function(a,b){return a.date.localeCompare(b.date);});
+  if(!upcoming.length) return;
+  var next=upcoming[0], days=getDaysLeft(next.date), urgent=days<=7;
+  var box=document.createElement('div'); box.className='countdown-box';
+  box.innerHTML='<div class="countdown-label">次回テストまで</div><div class="countdown-days'+(urgent?' urgent':'')+'">'+days+'</div><div class="countdown-sub">'+next.name+' — '+next.date+'</div>';
+  el.appendChild(box);
+}
+
+// ── 音声 ──
+function stopListening() {
+  isListening = false;
+  if(micTimer) { clearTimeout(micTimer); micTimer = null; }
+  var micBtn = document.getElementById('mic-btn');
+  var qans = document.getElementById('qans');
+  var vstatus = document.getElementById('vstatus');
+  if(micBtn) micBtn.classList.remove('listening');
+  if(qans) { qans.classList.remove('listening'); qans.placeholder='答えをここに書くか、マイクで話してください…'; }
+  if(vstatus) vstatus.className = 'vstatus';
+}
+
+function initRecog() {
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return null;
+  var r=new SR(); r.lang='ja-JP'; r.continuous=false; r.interimResults=true;
+  r.onstart=function(){
+    isListening=true;
+    if(micTimer) clearTimeout(micTimer);
+    micTimer = setTimeout(function(){ if(isListening && recog){ try{recog.stop();}catch(e){stopListening();} } }, 8000);
+    document.getElementById('mic-btn').classList.add('listening');
+    document.getElementById('qans').classList.add('listening');
+    var s=document.getElementById('vstatus'); s.className='vstatus on';
+    s.innerHTML='聞いています…<span class="wb"><span></span><span></span><span></span><span></span></span>';
+  };
+  r.onresult=function(e){
+    if(micTimer) { clearTimeout(micTimer); micTimer=null; }
+    var f='',i='';
+    for(var x=e.resultIndex;x<e.results.length;x++){if(e.results[x].isFinal)f+=e.results[x][0].transcript;else i+=e.results[x][0].transcript;}
+    var a=document.getElementById('qans');
+    if(f) a.value=(a.value+f).trim();
+    else if(i) a.placeholder=i+'...';
+  };
+  r.onend=function(){
+    var a=document.getElementById('qans');
+    var hadValue = a && a.value;
+    stopListening();
+    if(hadValue){
+      var s=document.getElementById('vstatus');
+      if(s){s.className='vstatus done';s.textContent='認識しました。確認して「答え合わせ」を押してください。';setTimeout(function(){if(s)s.className='vstatus';},3000);}
+    }
+  };
+  r.onerror=function(e){
+    stopListening();
+    if(e.error==='not-allowed'){
+      var s=document.getElementById('vstatus');
+      if(s){s.className='vstatus on';s.textContent='マイクのアクセスが拒否されています。Safariの設定から許可してください。';}
+    }
+  };
+  return r;
+}
+
+// ── データ移行 ──
+function checkMig() {
+  // Always check for old data to migrate
+  var old=[];
+  OLD_KEYS.forEach(function(k){ try{ var r=localStorage.getItem(k); if(r){var d=JSON.parse(r);if(Array.isArray(d)&&d.length)old=old.concat(d);} }catch(e){} });
+  if(!old.length) return;
+  var b=document.getElementById('mig-banner'); if(!b) return;
+  var div=document.createElement('div'); div.className='mig';
+  var title=document.createElement('div'); title.style.cssText='font-size:14px;font-weight:700;margin-bottom:6px'; title.textContent='過去のデータが見つかりました';
+  var sub=document.createElement('div'); sub.style.cssText='font-size:13px;color:rgba(255,255,255,.8);margin-bottom:12px'; sub.textContent='以前のバージョンで記録した'+old.length+'件を引き継げます。';
+  var okBtn=document.createElement('button'); okBtn.style.cssText='font-size:13px;font-weight:700;padding:8px 18px;background:var(--kr);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:inherit'; okBtn.textContent='データを引き継ぐ';
+  okBtn.addEventListener('click', function(){
+    var ex=new Set(hist.map(function(h){return h.date+'-'+h.subject+'-'+h.unit;}));
+    var nd=old.filter(function(h){return !ex.has(h.date+'-'+h.subject+'-'+h.unit);});
+    hist=hist.concat(nd).sort(function(a,b){return b.date.localeCompare(a.date);}).slice(0,200);
+    saveData(); localStorage.setItem('keio-migrated','1');
+    b.innerHTML=''; renderHome();
+    var ok=document.createElement('div'); ok.style.cssText='background:#f0f7ec;border:1px solid #c4e0b5;border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:14px;color:#1f5c0f;font-weight:600'; ok.textContent=nd.length+'件のデータを引き継ぎました！';
+    b.appendChild(ok); setTimeout(function(){ b.innerHTML=''; },3000);
+  });
+  var skipBtn=document.createElement('button'); skipBtn.style.cssText='font-size:12px;padding:8px 14px;border:none;background:none;color:rgba(255,255,255,.7);cursor:pointer;font-family:inherit'; skipBtn.textContent='スキップ';
+  skipBtn.addEventListener('click', function(){ localStorage.setItem('keio-migrated','1'); b.innerHTML=''; });
+  div.appendChild(title); div.appendChild(sub); div.appendChild(okBtn); div.appendChild(skipBtn);
+  b.appendChild(div);
+}
+
+// ── イベント登録 ──
+function initEvents() {
+  // Nav
+  document.getElementById('nav-home').addEventListener('click', function(){ gv('home'); });
+  document.getElementById('nav-setup').addEventListener('click', function(){ gv('setup'); });
+  document.getElementById('nav-monthly').addEventListener('click', function(){ gv('monthly'); });
+  document.getElementById('nav-history').addEventListener('click', function(){ gv('history'); });
+
+  // Drill
+  document.getElementById('btn-start-drill').addEventListener('click', startDrill);
+  document.getElementById('bcheck').addEventListener('click', checkA);
+  document.getElementById('bnext').addEventListener('click', nextQ);
+  document.getElementById('bskip').addEventListener('click', skipQ);
+  document.getElementById('ai-header').addEventListener('click', togAI);
+  document.getElementById('mic-btn').addEventListener('click', function(){
+    var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR){alert('音声入力はSafariで利用できます。');return;}
+    if(!recog) recog=initRecog();
+    if(isListening) recog.stop(); else { document.getElementById('qans').value=''; recog.start(); }
+  });
+
+  // AI buttons
+  var aiTypes=['hint','explain','similar','why'];
+  var aiLabels=['ヒントを見る','解き方を教えて','類題を出して','なぜ間違えた？'];
+  var aibrow=document.getElementById('aibrow');
+  aiTypes.forEach(function(type, i){
+    var btn=document.createElement('button'); btn.className='aib'; btn.setAttribute('data-type',type); btn.textContent=aiLabels[i];
+    btn.addEventListener('click', function(){ runAI(type); });
+    aibrow.appendChild(btn);
+  });
+
+  // Result
+  document.getElementById('res-home-btn').addEventListener('click', function(){ gv('home'); });
+
+  // Monthly
+  document.getElementById('mt-tab-range').addEventListener('click', function(){ mtTabShow('range'); });
+  document.getElementById('mt-tab-drill').addEventListener('click', function(){ mtTabShow('drill'); });
+  document.getElementById('mt-tab-weak').addEventListener('click', function(){ mtTabShow('weak'); });
+  document.getElementById('mt-tab-exam').addEventListener('click', function(){ mtTabShow('exam'); });
+  document.getElementById('btn-save-range').addEventListener('click', saveMtRange);
+  document.getElementById('btn-add-exam').addEventListener('click', addExam);
+}
+
+// ── 起動 ──
+loadData();
+initEvents();
+renderSelButtons();
+renderHome();
+renderMtNextCard();
+renderDataMgmt();
+checkMig();
+
+})();
+</script>
+</body>
+</html>
