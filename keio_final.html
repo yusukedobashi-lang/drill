@@ -174,6 +174,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','N
     <div class="htitle">慶應受験ドリル <span style="font-size:11px;background:var(--kr);color:#fff;padding:2px 8px;border-radius:99px;font-weight:700">AI完全連携</span></div>
     <div class="hsub">普通部・中等部・SFC 対策</div>
   </div>
+  <button id="api-key-btn" title="APIキー設定" style="margin-left:auto;background:none;border:1.5px solid rgba(255,255,255,.4);border-radius:8px;padding:6px 10px;cursor:pointer;color:#fff;font-size:12px;font-family:inherit;font-weight:600;flex-shrink:0">🔑 API</button>
 </div>
 
 <div class="nav">
@@ -188,6 +189,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Kaku Gothic ProN','N
 
 <!-- HOME -->
 <div id="v-home" class="view on">
+  <div id="api-key-area"></div>
   <div id="mig-area"></div>
   <div id="mt-next-card"></div>
   <div class="srow" id="hstats"></div>
@@ -867,6 +869,11 @@ function runDrill(subject, unit, level, count, school, rangeText) {
 }
 
 function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
+  // APIキー未設定チェック
+  if(!API_KEY) {
+    showApiKeySetup();
+    return;
+  }
   var loadEl  = document.getElementById('drill-loading');
   var mainEl  = document.getElementById('drill-main');
   var metaEl  = document.getElementById('qmeta');
@@ -1052,6 +1059,53 @@ function finishDrill() {
 }
 
 // ── ホーム ──
+function showApiKeySetup() {
+  var existing = document.getElementById('api-key-modal');
+  if(existing) existing.remove();
+  var overlay = document.createElement('div');
+  overlay.id = 'api-key-modal';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  var box = document.createElement('div');
+  box.style.cssText = 'background:#fff;border-radius:16px;padding:24px;width:100%;max-width:420px;box-shadow:0 8px 32px rgba(0,0,0,.3)';
+  var title = document.createElement('div');
+  title.style.cssText = 'font-size:17px;font-weight:700;color:var(--kn);margin-bottom:8px';
+  title.textContent = 'Anthropic APIキーを設定';
+  var desc = document.createElement('div');
+  desc.style.cssText = 'font-size:13px;color:var(--ks);margin-bottom:16px;line-height:1.7';
+  desc.innerHTML = 'Claude AIで問題を生成するにはAnthropicのAPIキーが必要です。<br><a href="https://console.anthropic.com" target="_blank" style="color:var(--kn);font-weight:600">console.anthropic.com</a> で取得できます（要登録）。';
+  var label = document.createElement('div');
+  label.style.cssText = 'font-size:12px;font-weight:600;color:var(--ks);margin-bottom:6px';
+  label.textContent = 'APIキー（sk-ant-...）';
+  var inp = document.createElement('input');
+  inp.type = 'password';
+  inp.placeholder = 'sk-ant-api03-...';
+  inp.style.cssText = 'width:100%;font-size:14px;padding:10px 12px;border:1.5px solid var(--kb);border-radius:10px;margin-bottom:16px;font-family:inherit;outline:none;-webkit-appearance:none;display:block';
+  inp.value = API_KEY || '';
+  var saveBtn = document.createElement('button');
+  saveBtn.style.cssText = 'width:100%;font-size:15px;font-weight:700;padding:13px;background:var(--kn);color:#fff;border:none;border-radius:10px;cursor:pointer;font-family:inherit;margin-bottom:10px;display:block';
+  saveBtn.textContent = '保存してはじめる';
+  saveBtn.addEventListener('click', function() {
+    var key = inp.value.trim();
+    if(!key || !key.startsWith('sk-')) {
+      alert('正しいAPIキーを入力してください（sk-ant-...で始まります）');
+      return;
+    }
+    API_KEY = key;
+    localStorage.setItem('keio-api-key', key);
+    overlay.remove();
+    renderHome();
+  });
+  var cancelBtn = document.createElement('button');
+  cancelBtn.style.cssText = 'width:100%;font-size:13px;padding:10px;background:none;color:var(--ks);border:1.5px solid var(--kb);border-radius:10px;cursor:pointer;font-family:inherit;display:block';
+  cancelBtn.textContent = 'あとで設定する';
+  cancelBtn.addEventListener('click', function(){ overlay.remove(); });
+  box.appendChild(title); box.appendChild(desc); box.appendChild(label);
+  box.appendChild(inp); box.appendChild(saveBtn); box.appendChild(cancelBtn);
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+  setTimeout(function(){ inp.focus(); }, 100);
+}
+
 function renderHome() {
   var tq=hist.reduce(function(a,h){return a+h.total;},0), tc=hist.reduce(function(a,h){return a+h.correct;},0);
   var el=document.getElementById('hstats'); el.innerHTML='';
@@ -1432,6 +1486,8 @@ function initEvents(){
   document.getElementById('nav-monthly').addEventListener('click',function(){gv('monthly');});
   document.getElementById('nav-ref').addEventListener('click',function(){gv('ref');});
   document.getElementById('nav-history').addEventListener('click',function(){gv('history');});
+  var apiKeyBtn = document.getElementById('api-key-btn');
+  if(apiKeyBtn) apiKeyBtn.addEventListener('click', showApiKeySetup);
   document.getElementById('btn-start-drill').addEventListener('click',startDrill);
   document.getElementById('bcheck').addEventListener('click',checkA);
   document.getElementById('bnext').addEventListener('click',nextQ);
@@ -1466,6 +1522,10 @@ renderSelButtons();
 renderHome();
 renderMtNextCard();
 checkMigration();
+// APIキー未設定なら起動後に自動表示
+if(!API_KEY) {
+  setTimeout(function(){ showApiKeySetup(); }, 800);
+}
 
 })();
 </script>
