@@ -369,15 +369,7 @@ var UNITS = {
   理科: ['電気','植物','天体・地層','動物・人体','化学変化'],
   社会: ['地理','歴史','公民・時事']
 };
-var BACKUP = {
-  算数: [
-    {q:'A地を出発した太郎は時速4kmで歩き、30分後にB地に着いた。AB間の距離は何kmか。',a:'2km',h:'距離＝速さ×時間'},
-    {q:'食塩10gを水190gに溶かした。この食塩水の濃度は何%か。',a:'5%',h:'濃度＝食塩÷食塩水×100'}
-  ],
-  国語: [{q:'次の漢字の読みを答えなさい。①快晴 ②誠実',a:'かいせい せいじつ',h:'2つ正解で正答'}],
-  理科: [{q:'光合成に必要な3つのものを答えなさい。',a:'水 二酸化炭素 光',h:'3つ入っていれば正解'}],
-  社会: [{q:'江戸幕府を開いた人物と年を答えなさい。',a:'徳川家康 1603',h:'人物と年が入っていれば正解'}]
-};
+
 
 // ── 状態 ──
 var hist = [], mtData = {ranges:[],exams:[]}, refImages = [];
@@ -849,24 +841,97 @@ function runDrill(subject, unit, level, count, school, rangeText) {
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('on');});
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('on');});
   document.getElementById('v-drill').classList.add('on');
-  document.getElementById('drill-loading').style.display='block';
-  document.getElementById('drill-main').style.display='none';
-  document.getElementById('qmeta').textContent = subject+'：'+unit+' — AI生成中...';
-  document.getElementById('ppct').textContent = '';
   document.getElementById('res-retry-btn').onclick = function(){gv(sess.backView);};
+  execGenerate(subject, unit, level, count, school, rangeText, 1);
+}
+
+function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
+  var loadEl  = document.getElementById('drill-loading');
+  var mainEl  = document.getElementById('drill-main');
+  var metaEl  = document.getElementById('qmeta');
+  var pctEl   = document.getElementById('ppct');
+
+  loadEl.style.display='block';
+  mainEl.style.display='none';
+  metaEl.textContent = subject+'：'+unit+' — AI生成中'+(attempt>1?' (再試行'+attempt+'回目)':'')+'...';
+  pctEl.textContent='';
 
   var prompt = buildPrompt(subject, unit, level, count, school, rangeText);
-  callAPI('あなたは慶應義塾中学受験専門の最難関出題AIです。以下を厳守してください：①指定された単元の問題のみ作成し他単元を絶対混入させない②算数は論点2つ以上・ひっかけ・パターン名必須③国語は根拠が本文中に存在する記述問題を含める④理科は実験考察・グラフ問題を含める⑤社会は資料読み取り・因果関係を問う⑥全科目：測りたい力と誤答ポイントをhフィールドに記載⑦JSON形式のみで返す（前置き・説明・```一切不要）', prompt, 1600, function(err, raw) {
+  var sysMsg = 'あなたは慶應義塾中学受験専門の最難関出題AIです。以下を厳守してください：①指定された単元の問題のみ作成し他単元を絶対混入させない②算数は論点2つ以上・ひっかけ・パターン名必須③国語は根拠が本文中に存在する記述問題を含める④理科は実験考察・グラフ問題を含める⑤社会は資料読み取り・因果関係を問う⑥全科目：測りたい力と誤答ポイントをhフィールドに記載⑦JSON形式のみで返す（前置き・説明・```一切不要）';
+
+  callAPI(sysMsg, prompt, 1600, function(err, raw) {
     var qs = null;
     if(!err && raw) {
-      try { var clean=raw.replace(/```json|```/g,'').trim(); qs=JSON.parse(clean).questions; sess.aiGenerated=true; } catch(e){}
+      try {
+        var clean = raw.replace(/```json|```/g,'').trim();
+        qs = JSON.parse(clean).questions;
+      } catch(e){}
     }
-    if(!qs||!qs.length) { qs=(BACKUP[subject]||[]).slice(0,count); sess.aiGenerated=false; }
-    if(!qs.length) { document.getElementById('drill-loading').style.display='none'; alert('問題の生成に失敗しました。'); gv(sess.backView); return; }
-    sess.qs=qs;
-    document.getElementById('drill-loading').style.display='none';
-    document.getElementById('drill-main').style.display='block';
-    renderQ();
+
+    if(qs && qs.length) {
+      // 成功
+      sess.qs = qs;
+      sess.aiGenerated = true;
+      loadEl.style.display='none';
+      mainEl.style.display='block';
+      renderQ();
+    } else {
+      // 失敗時 — 再試行UIを表示
+      loadEl.style.display='none';
+      mainEl.style.display='none';
+
+      var errDiv = document.getElementById('drill-error');
+      if(!errDiv) {
+        errDiv = document.createElement('div');
+        errDiv.id = 'drill-error';
+        loadEl.parentElement.insertBefore(errDiv, loadEl.nextSibling);
+      }
+      errDiv.innerHTML = '';
+
+      var card = document.createElement('div');
+      card.className = 'card';
+      card.style.textAlign = 'center';
+      card.style.padding = '24px 16px';
+
+      var icon = document.createElement('div');
+      icon.style.cssText = 'font-size:36px;margin-bottom:12px';
+      icon.textContent = attempt >= 3 ? '📶' : '⚠️';
+
+      var msg = document.createElement('div');
+      msg.style.cssText = 'font-size:15px;font-weight:700;color:var(--kn);margin-bottom:8px';
+      msg.textContent = attempt >= 3 ? '接続を確認してください' : 'AI問題の生成に失敗しました';
+
+      var sub = document.createElement('div');
+      sub.style.cssText = 'font-size:13px;color:var(--ks);margin-bottom:20px;line-height:1.6';
+      sub.textContent = attempt >= 3
+        ? 'インターネット接続を確認してから再試行してください。'
+        : '一時的なエラーです。もう一度試してみてください。（' + attempt + '/3回目）';
+
+      var retryBtn = document.createElement('button');
+      retryBtn.className = 'bp';
+      retryBtn.style.marginBottom = '10px';
+      retryBtn.textContent = 'もう一度生成する';
+      retryBtn.addEventListener('click', function(){
+        errDiv.innerHTML = '';
+        execGenerate(subject, unit, level, count, school, rangeText, attempt+1);
+      });
+
+      var backBtn = document.createElement('button');
+      backBtn.className = 'bs';
+      backBtn.style.width = '100%';
+      backBtn.textContent = '設定に戻る';
+      backBtn.addEventListener('click', function(){
+        errDiv.innerHTML = '';
+        gv(sess.backView);
+      });
+
+      card.appendChild(icon);
+      card.appendChild(msg);
+      card.appendChild(sub);
+      card.appendChild(retryBtn);
+      card.appendChild(backBtn);
+      errDiv.appendChild(card);
+    }
   });
 }
 
