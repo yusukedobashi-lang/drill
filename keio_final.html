@@ -891,9 +891,9 @@ function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
   pctEl.textContent = '';
 
   var prompt = buildPrompt(subject, unit, level, count, school, rangeText);
-  var sysMsg = 'あなたは慶應義塾中学受験専門の最難関出題AIです。以下を厳守してください：①指定された単元の問題のみ作成し他単元を絶対混入させない②算数は論点2つ以上・ひっかけ・パターン名必須③国語は根拠が本文中に存在する記述問題を含める④理科は実験考察・グラフ問題を含める⑤社会は資料読み取り・因果関係を問う⑥全科目：測りたい力と誤答ポイントをhフィールドに記載⑦JSON形式のみで返す（前置き・説明・```一切不要）';
+  var sysMsg = 'あなたは中学受験専門の出題AIです。必ず有効なJSON形式のみで返してください。{"questions":[...]} の形式以外のテキストは一切出力禁止です。';
 
-  callAPI(sysMsg, prompt, 1600, function(err, raw) {
+  callAPI(sysMsg, prompt, 2000, function(err, raw) {
     var qs = null;
     var parseErr = null;
 
@@ -901,19 +901,21 @@ function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
       console.error('[API Error]', err);
     } else if(raw) {
       try {
-        var clean = raw.replace(/```json[\s\S]*?```/g, function(m){
-          return m.replace(/```json/,'').replace(/```/,'');
-        }).trim();
-        var m = clean.match(/\{"questions"\s*:\s*\[[\s\S]*?\]\s*\}/);
-        if(!m) m = clean.match(/\{[\s\S]*"questions"[\s\S]*\}/);
-        if(m) clean = m[0];
+        // ステップ1: ```json ... ``` ブロックを除去
+        var clean = raw.replace(/```json/g,'').replace(/```/g,'').trim();
+        // ステップ2: 最初の { から最後の } までを抽出
+        var start = clean.indexOf('{');
+        var end   = clean.lastIndexOf('}');
+        if(start >= 0 && end > start) {
+          clean = clean.slice(start, end + 1);
+        }
         var parsed = JSON.parse(clean);
         if(parsed && Array.isArray(parsed.questions) && parsed.questions.length > 0) {
           qs = parsed.questions;
         }
       } catch(e) {
         parseErr = e;
-        console.error('[Parse Error]', e.message, 'Raw:', raw.slice(0, 300));
+        console.error('[Parse Error]', e.message, 'Raw:', raw.slice(0, 500));
       }
     }
 
