@@ -510,6 +510,8 @@ function callAPI(system, user, maxT, cb) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'x-api-key': API_KEY,
+      'anthropic-version': '2023-06-01',
       'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
@@ -523,7 +525,7 @@ function callAPI(system, user, maxT, cb) {
   }).then(function(d) {
     if(d.error) {
       console.error('[API Error]', d.error.type, d.error.message);
-      cb(new Error(d.error.message), '');
+      cb(new Error(d.error.type + ': ' + d.error.message), '');
       return;
     }
     cb(null, (d.content||[]).map(function(c){return c.text||'';}).join(''));
@@ -538,6 +540,8 @@ function callAPIWithImage(system, textContent, imageB64, mediaType, maxT, cb) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'x-api-key': API_KEY,
+      'anthropic-version': '2023-06-01',
       'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
