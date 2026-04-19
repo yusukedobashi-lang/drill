@@ -515,7 +515,7 @@ function callAPI(system, user, maxT, cb) {
       'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: maxT || 800,
       system: system,
       messages: [{role:'user', content:user}]
@@ -545,7 +545,7 @@ function callAPIWithImage(system, textContent, imageB64, mediaType, maxT, cb) {
       'anthropic-dangerous-direct-browser-access': 'true'
     },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514', max_tokens: maxT||1200, system: system,
+      model: 'claude-sonnet-4-5', max_tokens: maxT||1200, system: system,
       messages: [{role:'user', content:[
         {type:'image', source:{type:'base64', media_type:mediaType, data:imageB64}},
         {type:'text', text:textContent}
