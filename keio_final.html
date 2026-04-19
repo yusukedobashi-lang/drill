@@ -375,6 +375,7 @@ var UNITS = {
 
 // ── 状態 ──
 var hist = [], mtData = {ranges:[],exams:[]}, refImages = [];
+var API_KEY = '';
 var recog = null, isListening = false, aiOpen = false, micTimer = null;
 var sel = {subject:'算数', unit:'速さ', level:'標準', count:'5', school:'全般'};
 var sess = {qs:[], idx:0, correct:0, answers:[], scores:[], subject:'算数', unit:'速さ', level:'標準', school:'全般', count:5, date:'', aiGenerated:false, isMT:false, backView:'setup'};
@@ -869,110 +870,101 @@ function runDrill(subject, unit, level, count, school, rangeText) {
 }
 
 function execGenerate(subject, unit, level, count, school, rangeText, attempt) {
-  // APIキー未設定チェック
-  if(!API_KEY) {
-    showApiKeySetup();
-    return;
-  }
-  var loadEl  = document.getElementById('drill-loading');
-  var mainEl  = document.getElementById('drill-main');
-  var metaEl  = document.getElementById('qmeta');
-  var pctEl   = document.getElementById('ppct');
+  if(!API_KEY) { showApiKeySetup(); return; }
 
-  loadEl.style.display='block';
-  mainEl.style.display='none';
-  metaEl.textContent = subject+'：'+unit+' — AI生成中'+(attempt>1?' (再試行'+attempt+'回目)':'')+'...';
-  pctEl.textContent='';
+  var loadEl = document.getElementById('drill-loading');
+  var mainEl = document.getElementById('drill-main');
+  var metaEl = document.getElementById('qmeta');
+  var pctEl  = document.getElementById('ppct');
+  var errDiv = document.getElementById('drill-error');
+
+  // 既存エラー表示をクリア
+  if(errDiv) errDiv.innerHTML = '';
+
+  loadEl.style.display = 'block';
+  mainEl.style.display = 'none';
+  metaEl.textContent = subject + '：' + unit + ' — AI生成中' + (attempt > 1 ? '（再試行' + attempt + '回目）' : '') + '...';
+  pctEl.textContent = '';
 
   var prompt = buildPrompt(subject, unit, level, count, school, rangeText);
   var sysMsg = 'あなたは慶應義塾中学受験専門の最難関出題AIです。以下を厳守してください：①指定された単元の問題のみ作成し他単元を絶対混入させない②算数は論点2つ以上・ひっかけ・パターン名必須③国語は根拠が本文中に存在する記述問題を含める④理科は実験考察・グラフ問題を含める⑤社会は資料読み取り・因果関係を問う⑥全科目：測りたい力と誤答ポイントをhフィールドに記載⑦JSON形式のみで返す（前置き・説明・```一切不要）';
 
   callAPI(sysMsg, prompt, 1600, function(err, raw) {
     var qs = null;
+    var parseErr = null;
+
     if(err) {
-      console.error('[execGenerate] API error:', err);
+      console.error('[API Error]', err);
     } else if(raw) {
       try {
-        var clean = raw.replace(/```json|```/g,'').trim();
-        // JSONブロックを探す（余分なテキストが前後にある場合の対策）
-        var jsonMatch = clean.match(/\{[\s\S]*"questions"[\s\S]*\}/);
-        if(jsonMatch) clean = jsonMatch[0];
-        qs = JSON.parse(clean).questions;
+        var clean = raw.replace(/```json[\s\S]*?```/g, function(m){
+          return m.replace(/```json/,'').replace(/```/,'');
+        }).trim();
+        var m = clean.match(/\{"questions"\s*:\s*\[[\s\S]*?\]\s*\}/);
+        if(!m) m = clean.match(/\{[\s\S]*"questions"[\s\S]*\}/);
+        if(m) clean = m[0];
+        var parsed = JSON.parse(clean);
+        if(parsed && Array.isArray(parsed.questions) && parsed.questions.length > 0) {
+          qs = parsed.questions;
+        }
       } catch(e) {
-        console.error('[execGenerate] JSON parse error:', e, 'raw:', raw.slice(0,200));
+        parseErr = e;
+        console.error('[Parse Error]', e.message, 'Raw:', raw.slice(0, 300));
       }
     }
 
     if(qs && qs.length) {
-      // 成功
+      // ── 成功 ──
       sess.qs = qs;
       sess.aiGenerated = true;
-      loadEl.style.display='none';
-      mainEl.style.display='block';
-      var errDiv2 = document.getElementById('drill-error');
-      if(errDiv2) errDiv2.innerHTML = '';
+      loadEl.style.display = 'none';
+      mainEl.style.display = 'block';
+      if(errDiv) errDiv.innerHTML = '';
       renderQ();
     } else {
-      // 失敗時 — 再試行UIを表示
-      var capturedErr = err;
-      loadEl.style.display='none';
-      mainEl.style.display='none';
+      // ── 失敗 ──
+      loadEl.style.display = 'none';
+      mainEl.style.display = 'none';
 
-      var errDiv = document.getElementById('drill-error');
       if(!errDiv) {
         errDiv = document.createElement('div');
         errDiv.id = 'drill-error';
-        loadEl.parentElement.insertBefore(errDiv, loadEl.nextSibling);
+        document.getElementById('v-drill').appendChild(errDiv);
       }
       errDiv.innerHTML = '';
 
+      var errMsg = err ? (err.message || String(err)) : parseErr ? 'JSONパースエラー: ' + parseErr.message : 'レスポンスが空です';
       var card = document.createElement('div');
       card.className = 'card';
-      card.style.textAlign = 'center';
-      card.style.padding = '24px 16px';
-
-      var icon = document.createElement('div');
-      icon.style.cssText = 'font-size:36px;margin-bottom:12px';
-      icon.textContent = attempt >= 3 ? '📶' : '⚠️';
-
-      var msg = document.createElement('div');
-      msg.style.cssText = 'font-size:15px;font-weight:700;color:var(--kn);margin-bottom:8px';
-      msg.textContent = attempt >= 3 ? '接続を確認してください' : 'AI問題の生成に失敗しました';
-
-      var sub = document.createElement('div');
-      sub.style.cssText = 'font-size:13px;color:var(--ks);margin-bottom:20px;line-height:1.6';
-      var errMsg = capturedErr ? '(' + (capturedErr.message||'接続エラー') + ')' : '(JSONパースエラー)';
-      sub.textContent = attempt >= 3
-        ? 'インターネット接続を確認してから再試行してください。' + errMsg
-        : '一時的なエラーです。もう一度試してみてください。（' + attempt + '/3回目）' + errMsg;
+      card.style.cssText = 'text-align:center;padding:28px 16px';
+      card.innerHTML = '<div style="font-size:32px;margin-bottom:12px">' + (attempt >= 3 ? '📶' : '⚠️') + '</div>'
+        + '<div style="font-size:15px;font-weight:700;color:var(--kn);margin-bottom:8px">'
+        + (attempt >= 3 ? '接続を確認してください' : 'AI問題の生成に失敗しました') + '</div>'
+        + '<div style="font-size:12px;color:var(--ks);margin-bottom:6px;word-break:break-all">' + errMsg + '</div>'
+        + '<div style="font-size:13px;color:var(--ks);margin-bottom:20px">'
+        + (attempt >= 3 ? 'インターネット接続とAPIキーを確認してください。' : '（' + attempt + '/3回目）') + '</div>';
 
       var retryBtn = document.createElement('button');
       retryBtn.className = 'bp';
       retryBtn.style.marginBottom = '10px';
       retryBtn.textContent = 'もう一度生成する';
-      retryBtn.addEventListener('click', function(){
-        errDiv.innerHTML = '';
-        execGenerate(subject, unit, level, count, school, rangeText, attempt+1);
-      });
+      retryBtn.addEventListener('click', (function(s,u,lv,c,sc,rt,a){
+        return function(){ errDiv.innerHTML=''; execGenerate(s,u,lv,c,sc,rt,a+1); };
+      })(subject, unit, level, count, school, rangeText, attempt));
 
       var backBtn = document.createElement('button');
       backBtn.className = 'bs';
       backBtn.style.width = '100%';
       backBtn.textContent = '設定に戻る';
-      backBtn.addEventListener('click', function(){
-        errDiv.innerHTML = '';
-        gv(sess.backView);
-      });
+      backBtn.addEventListener('click', function(){ errDiv.innerHTML=''; gv(sess.backView); });
 
-      card.appendChild(icon);
-      card.appendChild(msg);
-      card.appendChild(sub);
       card.appendChild(retryBtn);
       card.appendChild(backBtn);
       errDiv.appendChild(card);
     }
   });
 }
+
 
 // ── 問題描画 ──
 function renderQ() {
@@ -1515,6 +1507,7 @@ function initEvents(){
 }
 
 // ── 起動 ──
+API_KEY = localStorage.getItem('keio-api-key') || '';
 loadAll();
 initEvents();
 initRefEvents();
